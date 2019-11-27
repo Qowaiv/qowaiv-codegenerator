@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Snippets\*.cs" />
+    <EmbeddedResource Include="Snippets\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CodeGeneration.Roslyn" Version="0.6.1" />
   </ItemGroup>
 
