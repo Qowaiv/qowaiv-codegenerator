@@ -8,6 +8,7 @@ namespace CodeGeneration.Roslyn
     using System.Threading.Tasks;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
+    using Microsoft.CodeAnalysis.CSharp.Syntax;
 
     /// <summary>Represents a C# code snippet.</summary>
     /// <typeparam name="TSnippetArguments">
@@ -45,6 +46,27 @@ namespace CodeGeneration.Roslyn
         public CSharpParseOptions ParseOptions { get; }
 
         /// <summary>Parses the code snippet.</summary>
+        /// <returns>
+        /// The parsed <see cref="CompilationUnitSyntax"/> of the code snippet.
+        /// </returns>
+        public Task<CompilationUnitSyntax> ParseAsync() => ParseAsync(null);
+
+        /// <summary>Parses the code snippet.</summary>
+        /// <param name="arguments">
+        /// The (optional) arguments to transform the code snippet before parsing.
+        /// </param>
+        /// <returns>
+        /// The parsed <see cref="CompilationUnitSyntax"/> of the code snippet.
+        /// </returns>
+        public async Task<CompilationUnitSyntax> ParseAsync(TSnippetArguments arguments)
+        {
+            var transformed = arguments is null ? Text : TransformText(arguments);
+            var tree = CSharpSyntaxTree.ParseText(transformed, ParseOptions, FileName, Encoding.UTF8, default);
+            var root = await tree.GetRootAsync(default);
+            return (CompilationUnitSyntax)root;
+        }
+
+        /// <summary>Parses the code snippet.</summary>
         /// <typeparam name="TSyntax">
         /// The <see cref="SyntaxNode"/> type of the code snippet.
         /// </typeparam>
@@ -70,14 +92,8 @@ namespace CodeGeneration.Roslyn
         public async Task<TSyntax> ParseAsync<TSyntax>(TSnippetArguments arguments)
             where TSyntax : SyntaxNode
         {
-            var transformed = arguments is null ? Text : TransformText(arguments);
-
-            var tree = CSharpSyntaxTree.ParseText(transformed, ParseOptions, FileName, Encoding.UTF8, default);
-            var root = await tree.GetRootAsync(default);
-
-            return root is TSyntax requested
-                ? requested
-                : (TSyntax)root.ChildNodes().FirstOrDefault(ch => ch is TSyntax);
+            var root = await ParseAsync(arguments);
+            return (TSyntax)root.ChildNodes().FirstOrDefault(ch => ch is TSyntax);
         }
 
         /// <inheritdoc />
