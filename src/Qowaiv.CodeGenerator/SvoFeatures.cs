@@ -17,6 +17,9 @@ namespace Qowaiv.CodeGenerator
         IComparable = /*        */ 0x0400,
         ComparisonOperators = /**/ 0x0800,
         Parsing = /*            */ 0x1000,
-        All = /*                 */0x1FFF,
+        CultureDependent = /*   */ 0x2000,
+        All = /*                 */0x3FFF,
+        Continuous = All ^ IsEmpty ^ IsUnknown,
+        AllExcludingCulture = All ^ CultureDependent,
     }
 }

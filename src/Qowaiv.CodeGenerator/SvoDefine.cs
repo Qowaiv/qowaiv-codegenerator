@@ -13,6 +13,8 @@ namespace Qowaiv.CodeGenerator
 
         private SvoArguments Args { get; }
 
+        public bool NotCultureDependent => Args.LacksFeature(SvoFeatures.CultureDependent);
+
         public bool NotField => Args.LacksFeature(SvoFeatures.Field);
         public bool NotIsEmpty => Args.LacksFeature(SvoFeatures.IsEmpty);
         public bool NotIsUnknown => Args.LacksFeature(SvoFeatures.IsUnknown);

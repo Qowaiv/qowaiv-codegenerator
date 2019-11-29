@@ -108,6 +108,9 @@ namespace @Namespace
 
         #endregion
 
+
+#if !NotCultureDependent
+   
         /// <summary>Converts the <see cref="string"/> to <see cref="@TSvo"/>.
         /// A return value indicates whether the conversion succeeded.
         /// </summary>
@@ -137,9 +140,7 @@ namespace @Namespace
             }
             throw new NotImplementedException();
         }
-
-        #region Validation
-
+        
         /// <summary>Returns true if the value represents a valid @FullName.</summary>
         public static bool IsValid(string val) => IsValid(val, CultureInfo.CurrentCulture);
 
@@ -150,9 +151,42 @@ namespace @Namespace
                 && !Qowaiv.Unknown.IsUnknown(val, formatProvider as CultureInfo)
                 && TryParse(val, formatProvider, out _);
         }
+#else
+        /// <summary>Converts the <see cref="string"/> to <see cref="@TSvo"/>.
+        /// A return value indicates whether the conversion succeeded.
+        /// </summary>
+        /// <param name="s">
+        /// A string containing the @FullName to convert.
+        /// </param>
+        /// <param name="result">
+        /// The result of the parsing.
+        /// </param>
+        /// <returns>
+        /// True if the string was converted successfully, otherwise false.
+        /// </returns>
+        public static bool TryParse(string s, out @TSvo result)
+        {
+            result = default;
+            if (string.IsNullOrEmpty(s))
+            {
+                return true;
+            }
+            if (Qowaiv.Unknown.IsUnknown(s))
+            {
+                result = Unknown;
+                return true;
+            }
+            throw new NotImplementedException();
+        }
 
-        #endregion
-
+       /// <summary>Returns true if the value represents a valid @FullName.</summary>
+        public static bool IsValid(string val)
+        {
+            return !string.IsNullOrWhiteSpace(val)
+                && !Qowaiv.Unknown.IsUnknown(val)
+                && TryParse(val, out _);
+        }
+#endif
         /// <summary>Creates the @FullName based on an XML string.</summary>
         /// <param name="xmlString">
         /// The XML string representing the @FullName.

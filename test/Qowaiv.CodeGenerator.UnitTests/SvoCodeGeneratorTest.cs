@@ -32,7 +32,7 @@ namespace Qowaiv.CodeGenerator.UnitTests
                 Name = "Integer",
                 FullName = "Int32 wrapper",
                 Underlying = typeof(int),
-                Features = SvoFeatures.All ^ SvoFeatures.IsEmpty ^ SvoFeatures.IsUnknown,
+                Features = SvoFeatures.Continuous,
             };
             var generator = new SvoCodeGenerator(args);
 

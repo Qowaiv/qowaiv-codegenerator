@@ -5,6 +5,7 @@
 
     public partial struct @TSvo
     {
+#if NotCultureDependent
         /// <summary>Converts the <see cref="string"/> to <see cref="@TSvo"/>.</summary>
         /// <param name="s">
         /// A string containing the @FullName to convert.
@@ -62,5 +63,35 @@
         /// True if the string was converted successfully, otherwise false.
         /// </returns>
         public static bool TryParse(string s, out @TSvo result) => TryParse(s, CultureInfo.CurrentCulture, out result);
+#else
+        /// <summary>Converts the <see cref="string"/> to <see cref="@TSvo"/>.</summary>
+        /// <param name="s">
+        /// A string containing the @FullName to convert.
+        /// </param>
+        /// <returns>
+        /// The parsed @FullName.
+        /// </returns>
+        /// <exception cref="FormatException">
+        /// <paramref name="s"/> is not in the correct format.
+        /// </exception>
+        public static @TSvo Parse(string s)
+        {
+            return TryParse(s, out @TSvo val)
+                ? val
+                : throw new FormatException(FormatExceptionMessage);
+        }
+
+        /// <summary>Converts the <see cref="string"/> to <see cref="@TSvo"/>.</summary>
+        /// <param name="s">
+        /// A string containing the @FullName to convert.
+        /// </param>
+        /// <returns>
+        /// The @FullName if the string was converted successfully, otherwise default.
+        /// </returns>
+        public static @TSvo TryParse(string s)
+        {
+            return TryParse(s, out @TSvo val) ? val : default;
+        }
+#endif
     }
 }
