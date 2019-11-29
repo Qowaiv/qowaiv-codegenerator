@@ -11,13 +11,15 @@ namespace Qowaiv.CodeGenerator
     {
         private const string CodeGeneration = nameof(CodeGeneration);
 
-        public SingleValueObjectAttribute(Type underlyingType, string fullName)
+        public SingleValueObjectAttribute(Type underlyingType, string fullName, SvoFeatures features = SvoFeatures.All)
         {
             UnderlyingType = underlyingType ?? typeof(string);
             FullName = fullName ?? UnderlyingType.Name;
+            Features = features;
         }
 
         public Type UnderlyingType { get; }
         public string FullName { get; }
+        public SvoFeatures Features { get; }
     }
 }

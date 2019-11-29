@@ -46,7 +46,7 @@
         /// </returns>
         public static @TSvo TryParse(string s)
         {
-            return TryParse(s, out @TSvo val) ? val : default;
+            return TryParse(s, CultureInfo.CurrentCulture, out @TSvo val) ? val : default;
         }
 
         /// <summary>Converts the <see cref="string"/> to <see cref="@TSvo"/>.
