@@ -84,6 +84,19 @@ namespace Qowaiv.CodeGenerator
             return SyntaxFactory.CompilationUnit(externs, usings, attributes, members);
         }
 
+        public async Task<CompilationUnitSyntax> GenerateUnitTestsAsync()
+        {
+            var root = await SvoSnippet.Embedded("UnitTests").ParseAsync<NamespaceDeclarationSyntax>(Arguments);
+
+            var externs = new SyntaxList<ExternAliasDirectiveSyntax>(Array.Empty<ExternAliasDirectiveSyntax>());
+            var usings = new SyntaxList<UsingDirectiveSyntax>(Array.Empty<UsingDirectiveSyntax>());
+            var attributes = new SyntaxList<AttributeListSyntax>(Array.Empty<AttributeListSyntax>());
+
+            var members = SyntaxFactory.SingletonList<MemberDeclarationSyntax>(root);
+
+            return SyntaxFactory.CompilationUnit(externs, usings, attributes, members);
+        }
+
 
         private async Task Structure(List<MemberDeclarationSyntax> results)
         {

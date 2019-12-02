@@ -1,9 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <IsTool>true</IsTool>
     <DevelopmentDependency>True</DevelopmentDependency>
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
 
   <ItemGroup>
