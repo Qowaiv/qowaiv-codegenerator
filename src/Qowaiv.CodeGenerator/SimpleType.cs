@@ -33,6 +33,7 @@ namespace Qowaiv.CodeGenerator
             { typeof(string), "string" },
             { typeof(long), "long" },
             { typeof(short), "short" },
+            { typeof(ulong), "ulong" },
             { typeof(DateTime), "DateTime" },
             { typeof(Guid), "Guid" },
         };

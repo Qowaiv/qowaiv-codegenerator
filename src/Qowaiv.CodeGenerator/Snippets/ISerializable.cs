@@ -1,5 +1,6 @@
 ﻿namespace @Namespace
 {
+    using System;
     using System.Runtime.Serialization;
 
     public partial struct @TSvo : ISerializable

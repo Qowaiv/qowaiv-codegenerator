@@ -14,10 +14,10 @@
             }
             throw new ArgumentException($"Argument must be {GetType().Name}.", nameof(obj));
         }
-
+#if !NotEqualsSvo
         /// <inheritdoc />
         public int CompareTo(@TSvo other) => Comparer<@type>.Default.Compare(m_Value, other.m_Value);
-
+#endif
 #if !NoComparisonOperators
         /// <summary>Returns true if the left operator is less then the right operator, otherwise false.</summary>
         public static bool operator <(@TSvo l, @TSvo r) => l.CompareTo(r) < 0;

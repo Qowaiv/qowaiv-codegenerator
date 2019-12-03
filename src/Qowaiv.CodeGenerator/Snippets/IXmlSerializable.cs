@@ -1,5 +1,6 @@
 ﻿namespace @Namespace
 {
+    using System.Globalization;
     using System.Xml;
     using System.Xml.Schema;
     using System.Xml.Serialization;
@@ -13,15 +14,16 @@
         XmlSchema IXmlSerializable.GetSchema() => null;
 
         /// <summary>Reads the @FullName from an <see href="XmlReader" />.</summary>
-        /// <remarks>
-        /// Uses <see cref="FromXml(string)"/>.
-        /// </remarks>
         /// <param name="reader">An XML reader.</param>
         void IXmlSerializable.ReadXml(XmlReader reader)
         {
             Guard.NotNull(reader, nameof(reader));
-            var s = reader.ReadElementString();
-            var val = FromXml(s);
+            var xml = reader.ReadElementString();
+#if !NotCultureDependent
+            var val = Parse(xml, CultureInfo.InvariantCulture);
+#else
+            var val = Parse(xml);
+#endif
             m_Value = val.m_Value;
         }
 

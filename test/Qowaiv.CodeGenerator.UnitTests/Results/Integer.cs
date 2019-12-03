@@ -17,7 +17,7 @@ namespace Qowaiv
     [Serializable]
     [OpenApiDataType(description: "", type: "string", format: "Integer")]
     [TypeConverter(typeof(Conversion.IntegerTypeConverter))]
-    [CodeGenerator.SingleValueObject(typeof(int), "Int32 wrapper",  SvoFeatures.All)]
+    [CodeGenerator.SingleValueObject(typeof(int), "Int32 wrapper",  SvoFeatures.Continuous)]
     public partial struct Integer : IJsonSerializable
     {
         /// <summary>Represents an empty/not set Int32 wrapper.</summary>

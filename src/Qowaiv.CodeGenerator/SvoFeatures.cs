@@ -18,8 +18,10 @@ namespace Qowaiv.CodeGenerator
         ComparisonOperators = /**/ 0x0800,
         Parsing = /*            */ 0x1000,
         CultureDependent = /*   */ 0x2000,
-        All = /*                 */0x3FFF,
+        Validation  = /*        */ 0x4000,
+        All = /*                 */0x7FFF,
+        Default = All ^ ComparisonOperators,
         Continuous = All ^ IsEmpty ^ IsUnknown,
-        AllExcludingCulture = All ^ CultureDependent,
+        AllExcludingCulture = Default ^ CultureDependent,
     }
 }

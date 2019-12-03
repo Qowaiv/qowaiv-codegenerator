@@ -1,5 +1,7 @@
 ﻿namespace @Namespace
 {
+    using System;
+
     public partial struct @TSvo
     {
 #if !NotField

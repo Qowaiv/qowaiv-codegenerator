@@ -15,6 +15,7 @@ namespace Qowaiv.CodeGenerator
                 .Replace("@FullName", arguments.FullName)
                 .Replace("@Namespace", arguments.Namespace)
                 .Replace("@type", arguments.Type)
+                .Replace("@FormatExceptionMessage", arguments.FormatExceptionMessage)
             ;
         }
 

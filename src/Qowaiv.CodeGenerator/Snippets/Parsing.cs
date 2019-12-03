@@ -5,7 +5,7 @@
 
     public partial struct @TSvo
     {
-#if NotCultureDependent
+#if !NotCultureDependent
         /// <summary>Converts the <see cref="string"/> to <see cref="@TSvo"/>.</summary>
         /// <param name="s">
         /// A string containing the @FullName to convert.
@@ -35,7 +35,7 @@
         {
             return TryParse(s, formatProvider, out @TSvo val)
                 ? val
-                : throw new FormatException(FormatExceptionMessage);
+                : throw new FormatException(@FormatExceptionMessage);
         }
 
         /// <summary>Converts the <see cref="string"/> to <see cref="@TSvo"/>.</summary>
@@ -78,7 +78,7 @@
         {
             return TryParse(s, out @TSvo val)
                 ? val
-                : throw new FormatException(FormatExceptionMessage);
+                : throw new FormatException(@FormatExceptionMessage);
         }
 
         /// <summary>Converts the <see cref="string"/> to <see cref="@TSvo"/>.</summary>

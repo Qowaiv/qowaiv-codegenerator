@@ -7,11 +7,14 @@ namespace Qowaiv.CodeGenerator
     [AttributeUsage(AttributeTargets.Struct, AllowMultiple = false)]
     [CodeGenerationAttribute(typeof(SvoCodeGenerator))]
     [Conditional(CodeGeneration)]
-    public  sealed class SingleValueObjectAttribute : Attribute
+    public sealed class SingleValueObjectAttribute : Attribute
     {
         private const string CodeGeneration = nameof(CodeGeneration);
 
-        public SingleValueObjectAttribute(Type underlyingType, string fullName, SvoFeatures features = SvoFeatures.All)
+        public SingleValueObjectAttribute(
+            Type underlyingType, 
+            string fullName, 
+            SvoFeatures features = SvoFeatures.Default)
         {
             UnderlyingType = underlyingType ?? typeof(string);
             FullName = fullName ?? UnderlyingType.Name;

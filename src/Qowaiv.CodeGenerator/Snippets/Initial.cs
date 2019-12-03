@@ -28,9 +28,6 @@ namespace @Namespace
         /// <summary>Represents an unknown (but set) @FullName.</summary>
         public static readonly @TSvo Unknown = new @TSvo(default);
 
-        /// <summary>Gets a culture dependent message when a <see cref="FormatException"/> occurs.</summary>
-        private static readonly string FormatExceptionMessage = QowaivMessages.FormatException@TSvo;
-
         /// <summary>Gets the number of characters of @FullName.</summary>
         public int Length => m_Value == null ? 0 : m_Value.Length;
 
@@ -107,7 +104,6 @@ namespace @Namespace
         public static explicit operator @TSvo(@type val) => Create(val);
 
         #endregion
-
 
 #if !NotCultureDependent
    
@@ -187,10 +183,5 @@ namespace @Namespace
                 && TryParse(val, out _);
         }
 #endif
-        /// <summary>Creates the @FullName based on an XML string.</summary>
-        /// <param name="xmlString">
-        /// The XML string representing the @FullName.
-        /// </param>
-        private static @TSvo FromXml(string xmlString) => Parse(xmlString, CultureInfo.InvariantCulture);
     }
 }

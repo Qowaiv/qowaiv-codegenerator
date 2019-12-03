@@ -50,10 +50,12 @@ namespace Qowaiv.CodeGenerator
 
         public SyntaxTriviaList AsTrivia()
         {
-            var defines = ActiveDefines.Select(d => SyntaxFactory.Trivia(d));
+            var defines = ActiveDefines
+                .Select(d => SyntaxFactory.Trivia(d))
+                .Concat(new[] { SyntaxFactory.CarriageReturnLineFeed });
+
             var trivia = SyntaxFactory.TriviaList(defines);
             return trivia;
-
         }
     }
 }
