@@ -9,7 +9,7 @@ namespace Qowaiv.CodeGenerator.UnitTests
     public class QowaivGeneratedTest
     {
         [TestCase("Date", typeof(DateTime), "date", "Qowaiv", SvoFeatures.Continuous ^ SvoFeatures.Field)]
-        [TestCase("DateSpan", typeof(ulong), "date span", "Qowaiv", SvoFeatures.Continuous)]
+        [TestCase("DateSpan", typeof(ulong), "date span", "Qowaiv", SvoFeatures.Continuous ^ SvoFeatures.EqualsSvo)]
         [TestCase("EmailAddress", typeof(string), "email address", "Qowaiv", SvoFeatures.Default)]
         [TestCase("Gender", typeof(byte), "gender", "Qowaiv", SvoFeatures.Default | SvoFeatures.ComparisonOperators)]
         [TestCase("HouseNumber", typeof(int), "house number", "Qowaiv", SvoFeatures.Default | SvoFeatures.ComparisonOperators)]
@@ -18,7 +18,7 @@ namespace Qowaiv.CodeGenerator.UnitTests
         [TestCase("Percentage", typeof(decimal), "percentage", "Qowaiv", SvoFeatures.Continuous ^ SvoFeatures.IFormattable)]
         [TestCase("PostalCode", typeof(string), "postal code", "Qowaiv", SvoFeatures.Default)]
         [TestCase("Uuid", typeof(Guid), "UUID", "Qowaiv", SvoFeatures.AllExcludingCulture ^ SvoFeatures.IsUnknown)]
-        [TestCase("WeekDate", typeof(Date), "week date", "Qowaiv", SvoFeatures.Continuous ^ SvoFeatures.Field)]
+        [TestCase("WeekDate", typeof(Date), "week date", "Qowaiv", SvoFeatures.Continuous ^ SvoFeatures.Field ^ SvoFeatures.ISerializable)]
         [TestCase("Year", typeof(short), "year", "Qowaiv", SvoFeatures.Default | SvoFeatures.ComparisonOperators)]
         [TestCase("YesNo", typeof(byte), "yes-no", "Qowaiv", SvoFeatures.Default)]
 
@@ -28,7 +28,7 @@ namespace Qowaiv.CodeGenerator.UnitTests
         [TestCase("Currency", typeof(string), "currency", "Qowaiv.Financial", SvoFeatures.Default)]
         [TestCase("InternationalBankAccountNumber", typeof(string), "IBAN", "Qowaiv.Financial", SvoFeatures.Default)]
         [TestCase("Money", typeof(decimal), "money", "Qowaiv.Financial", SvoFeatures.Continuous 
-            ^ SvoFeatures.ISerializable 
+            ^ SvoFeatures.ISerializable
             ^ SvoFeatures.EqualsSvo
             ^ SvoFeatures.Field)]
 
@@ -36,7 +36,7 @@ namespace Qowaiv.CodeGenerator.UnitTests
 
         [TestCase("StreamSize", typeof(long), "stream size", "Qowaiv.IO", SvoFeatures.Continuous ^ SvoFeatures.Field ^ SvoFeatures.IFormattable)]
 
-        [TestCase("CryptographicSeed", typeof(byte[]), "cryptographic seed", "Qowaiv.Security.Cryptography", SvoFeatures.AllExcludingCulture ^ SvoFeatures.IsUnknown)]
+        [TestCase("CryptographicSeed", typeof(byte[]), "cryptographic seed", "Qowaiv.Security.Cryptography", SvoFeatures.AllExcludingCulture ^ SvoFeatures.IsUnknown ^ SvoFeatures.EqualsSvo)]
 
         [TestCase("Elo", typeof(double), "elo", "Qowaiv.Statistics", SvoFeatures.Continuous)]
 

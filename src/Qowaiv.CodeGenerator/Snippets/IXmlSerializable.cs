@@ -25,7 +25,9 @@
             var val = Parse(xml);
 #endif
             m_Value = val.m_Value;
+            OnReadXml(val);
         }
+        partial void OnReadXml(@TSvo other);
 
         /// <summary>Writes the @FullName to an <see href="XmlWriter" />.</summary>
         /// <remarks>
