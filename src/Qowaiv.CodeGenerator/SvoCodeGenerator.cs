@@ -75,6 +75,7 @@ namespace Qowaiv.CodeGenerator
             await IComparable(members);
             await ISerializable(members);
             await IXmlSerializable(members);
+            await IJsonSerializable(members);
             await IFormattable(members);
             await Parsing(members);
             await Validation(members);
@@ -155,6 +156,12 @@ namespace Qowaiv.CodeGenerator
             if (Arguments.LacksFeature(SvoFeatures.IXmlSerializable)) { return; }
             results.Add(await SvoSnippet.Embedded(nameof(IXmlSerializable)).ParseAsync<MemberDeclarationSyntax>(Arguments));
         }
+        private async Task IJsonSerializable(List<MemberDeclarationSyntax> results)
+        {
+            if (Arguments.LacksFeature(SvoFeatures.IJsonSerializable)) { return; }
+            results.Add(await SvoSnippet.Embedded(nameof(IJsonSerializable)).ParseAsync<MemberDeclarationSyntax>(Arguments));
+        }
+
         private async Task Parsing(List<MemberDeclarationSyntax> results)
         {
             if (Arguments.LacksFeature(SvoFeatures.Parsing)) { return; }
