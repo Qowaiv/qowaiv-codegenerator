@@ -1,29 +1,22 @@
 ﻿namespace @Namespace
 {
     using System;
+    using System.Globalization;
     using Qowaiv.Json;
 
-    public partial struct @TSvo : IJsonSerializable
+    public partial struct @TSvo
     {
-        /// <inheritdoc />
-        [Obsolete("Use FromJson(object) instead.")]
-        void IJsonSerializable.FromJson() => ((IJsonSerializable)this).FromJson(null);
-
-        /// <inheritdoc />
-        [Obsolete("Use FromJson(object) instead.")]
-        void IJsonSerializable.FromJson(string jsonString) => ((IJsonSerializable)this).FromJson((object)jsonString);
-
-        /// <inheritdoc />
-        [Obsolete("Use FromJson(object) instead.")]
-        void IJsonSerializable.FromJson(long jsonInteger) => ((IJsonSerializable)this).FromJson((object)jsonInteger);
-
-        /// <inheritdoc />
-        [Obsolete("Use FromJson(object) instead.")]
-        void IJsonSerializable.FromJson(double jsonNumber) => ((IJsonSerializable)this).FromJson((object)jsonNumber);
-
-        /// <inheritdoc />
-        [Obsolete("Use FromJson(object) instead.")]
-        void IJsonSerializable.FromJson(DateTime jsonDate) => ((IJsonSerializable)this).FromJson((object)jsonDate);
-
+        /// <summary>Creates the @FullName from a JSON string.</summary>
+        /// <param name="json">
+        /// The JSON string to deserialize.
+        /// </param>
+        /// <returns>
+        /// The deserialized @FullName.
+        /// </returns>
+#if !NotCultureDependent
+        public static @TSvo FromJson(string json) => Parse(json, CultureInfo.InvariantCulture);
+#else
+        public static @TSvo FromJson(string json) => Parse(json);
+#endif
     }
 }

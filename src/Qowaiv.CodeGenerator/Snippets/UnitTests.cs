@@ -377,128 +377,34 @@
                 Assert.IsNull(obj.GetSchema());
             }
 
-            #endregion
+        #endregion
 
-            #region JSON (De)serialization tests
+        #region JSON (De)serialization tests
 
-            [Test]
-            public void FromJson_None_EmptyValue()
-            {
-                var act = JsonTester.Read<@TSvo>
-                 ();
-                var exp = @TSvo.Empty;
+        [TestCase("Invalid input")]
+        [TestCase("2017-06-11")]
+        [TestCase(long.MinValue)]
+        [TestCase(double.MinValue)]
+        public void FromJson_Invalid_Throws(object json)
+        {
+            Assert.Catch<FormatException>(() => JsonTester.Read<@TSvo>(json));
+        }
+        [TestCase("yes", "yes")]
+        [TestCase("yes", true)]
+        [TestCase("yes", 1)]
+        [TestCase("no", 0.0)]
+        [TestCase("?", "unknown")]
+        public void FromJson(@TSvo expected, object json)
+        {
+            var actual = JsonTester.Read<@TSvo>(json);
+            Assert.AreEqual(expected, actual);
+        }
 
-                Assert.AreEqual(exp, act);
-            }
-            [Test]
-            public void FromJson_Null_AssertNotSupportedException()
-            {
-                Assert.Catch<NotSupportedException>
-                (() =>
-                {
-                    JsonTester.Read<@TSvo>
-                     ();
-                },
-                "JSON deserialization from null is not supported.");
-            }
+        #endregion
 
-            [Test]
-            public void FromJson_InvalidStringValue_AssertFormatException()
-            {
-                Assert.Catch<FormatException>
-                (() =>
-                {
-                    JsonTester.Read<@TSvo>
-                     ("InvalidStringValue");
-                },
-                "Not a valid @FullName");
-            }
-            [Test]
-            public void FromJson_StringValue_AreEqual()
-            {
-                var act = JsonTester.Read<@TSvo>("JsonRepresentationString");
-                Assert.AreEqual(TestStruct, act);
-            }
+        #region IFormattable / Tostring tests
 
-            [Test]
-            public void FromJson_Int64Value_AreEqual()
-            {
-                var act = JsonTester.Read<@TSvo>(123456789L);
-                Assert.AreEqual(TestStruct, act);
-            }
-            [Test]
-            public void FromJson_Int64Value_AssertNotSupportedException()
-            {
-                Assert.Catch<NotSupportedException>
-                (() =>
-                {
-                    JsonTester.Read<@TSvo>
-                     (123456L);
-                },
-                "JSON deserialization from an integer is not supported.");
-            }
-
-            [Test]
-            public void FromJson_DoubleValue_AreEqual()
-            {
-                var act = JsonTester.Read<@TSvo>
-                 ((Double)TestStruct);
-                var exp = TestStruct;
-
-                Assert.AreEqual(exp, act);
-            }
-            [Test]
-            public void FromJson_DoubleValue_AssertNotSupportedException()
-            {
-                Assert.Catch<NotSupportedException>
-                (() =>
-                {
-                    JsonTester.Read<@TSvo>
-                     (1234.56);
-                },
-                "JSON deserialization from a number is not supported.");
-            }
-
-            [Test]
-            public void FromJson_DateTimeValue_AreEqual()
-            {
-                var act = JsonTester.Read<@TSvo>
-                 ((DateTime)TestStruct);
-                var exp = TestStruct;
-
-                Assert.AreEqual(exp, act);
-            }
-            [Test]
-            public void FromJson_DateTimeValue_AssertNotSupportedException()
-            {
-                Assert.Catch<NotSupportedException>
-                (() =>
-                {
-                    JsonTester.Read<@TSvo>
-                     (new DateTime(1972, 02, 14));
-                },
-                "JSON deserialization from a date is not supported.");
-            }
-
-            [Test]
-            public void ToJson_DefaultValue_IsNull()
-            {
-                object act = JsonTester.Write(default(@TSvo));
-                Assert.IsNull(act);
-            }
-            [Test]
-            public void ToJson_TestStruct_AreEqual()
-            {
-                var act = JsonTester.Write(TestStruct);
-                var exp = "Some JSON string";
-                Assert.AreEqual(exp, act);
-            }
-
-            #endregion
-
-            #region IFormattable / Tostring tests
-
-            [Test]
+        [Test]
             public void ToString_Empty_StringEmpty()
             {
                 var act = @TSvo.Empty.ToString();

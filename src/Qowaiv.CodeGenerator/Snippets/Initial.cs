@@ -20,7 +20,7 @@ namespace @Namespace
     [OpenApiDataType(type: "string", format: "@TSvo")]
     [TypeConverter(typeof(Conversion.@TSvoTypeConverter))]
     [SingleValueObject(typeof(@type), SvoFeatures.Default)]
-    public partial struct @TSvo : IJsonSerializable
+    public partial struct @TSvo
     {
         /// <summary>Represents an empty/not set @FullName.</summary>
         public static readonly @TSvo Empty;
@@ -54,42 +54,32 @@ namespace @Namespace
         /// <summary>Gets an XML string representation of the @FullName.</summary>
         private string ToXmlString() => ToString(CultureInfo.InvariantCulture);
 
-        #region (JSON) (De)serialization
-
-        /// <summary>Generates the @FullName from a JSON null object representation.</summary>
-        void IJsonSerializable.FromJson() => m_Value = default;
-
-        /// <summary>Generates the @FullName from a JSON string representation.</summary>
-        /// <param name="jsonString">
-        /// The JSON string that represents the @FullName.
+        /// <summary>Deserializes the @FullNumber from a JSON number.</summary>
+        /// <param name="json">
+        /// The JSON number to deserialize.
         /// </param>
-        void IJsonSerializable.FromJson(string jsonString) => m_Value = Parse(jsonString, CultureInfo.InvariantCulture).m_Value;
+        /// <returns>
+        /// The deserialized @FullName.
+        /// </returns>
+        public static @TSvo FromJson(double json) => Create(json);
 
-        /// <summary>Generates the @FullName from a JSON integer representation.</summary>
-        /// <param name="jsonInteger">
-        /// The JSON integer that represents the @FullName.
+        /// <summary>Deserializes the @FullNumber from a JSON number.</summary>
+        /// <param name="json">
+        /// The JSON number to deserialize.
         /// </param>
-        void IJsonSerializable.FromJson(long jsonInteger) => throw new NotSupportedException(QowaivMessages.JsonSerialization_Int64NotSupported);
-        // m_Value = Create(jsonInteger).m_Value;
+        /// <returns>
+        /// The deserialized @FullName.
+        /// </returns>
+        public static @TSvo FromJson(long json) => Create(json);
 
-        /// <summary>Generates the @FullName from a JSON number representation.</summary>
-        /// <param name="jsonNumber">
-        /// The JSON number that represents the @FullName.
+        /// <summary>Deserializes the @FullNumber from a JSON boolean.</summary>
+        /// <param name="json">
+        /// The number boolean to deserialize.
         /// </param>
-        void IJsonSerializable.FromJson(double jsonNumber) => throw new NotSupportedException(QowaivMessages.JsonSerialization_DoubleNotSupported);
-        // m_Value = Create(jsonNumber).m_Value;
-
-        /// <summary>Generates the @FullName from a JSON date representation.</summary>
-        /// <param name="jsonDate">
-        /// The JSON Date that represents the @FullName.
-        /// </param>
-        void IJsonSerializable.FromJson(DateTime jsonDate) => throw new NotSupportedException(QowaivMessages.JsonSerialization_DateTimeNotSupported);
-        // m_Value = Create(jsonDate).m_Value;
-
-        /// <summary>Converts the @FullName into its JSON object representation.</summary>
-        object IJsonSerializable.ToJson() => m_Value == default ? null : ToString(CultureInfo.InvariantCulture);
-
-        #endregion
+        /// <returns>
+        /// The deserialized @FullName.
+        /// </returns>
+        public static @TSvo FromJson(bool json) => Create(json);
 
         #region (Explicit) casting
 
