@@ -570,10 +570,9 @@ namespace @Namespace.UnitTests
 
         /// <summary>Compare with null should throw an exception.</summary>
         [Test]
-        public void CompareTo_null_ThrowsArgumentException()
+        public void CompareTo_null_1()
         {
-            var x = Assert.Catch<ArgumentException>(() => TestStruct.CompareTo(null));
-            Assert.AreEqual("Argument must be @TSvo. (Parameter 'obj')", x.Message);
+            Assert.AreEqual(1, TestStruct.CompareTo(null));
         }
 
         /// <summary>Compare with a random object should throw an exception.</summary>

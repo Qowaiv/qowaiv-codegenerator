@@ -23,7 +23,6 @@ namespace Qowaiv.CodeGenerator.UnitTests
         [TestCase("YesNo", typeof(byte), "yes-no", "Qowaiv", SvoFeatures.Default)]
 
         [TestCase("Amount", typeof(decimal), "amount", "Qowaiv.Financial", SvoFeatures.Continuous, "QowaivMessages.FormatExceptionFinancialAmount")]
-        [TestCase("BankIdentifierCode", typeof(string), "BIC", "Qowaiv.Financial", SvoFeatures.Default)]
         [TestCase("BusinessIdentifierCode", typeof(string), "BIC", "Qowaiv.Financial", SvoFeatures.Default)]
         [TestCase("Currency", typeof(string), "currency", "Qowaiv.Financial", SvoFeatures.Default)]
         [TestCase("InternationalBankAccountNumber", typeof(string), "IBAN", "Qowaiv.Financial", SvoFeatures.Default)]
@@ -75,10 +74,9 @@ namespace Qowaiv.CodeGenerator.UnitTests
             {
                 location.Directory.Create();
             }
-            using (var writer = new StreamWriter(location.FullName, false, Encoding.UTF8))
-            {
-                generated.WriteTo(writer);
-            }
+            using var writer = new StreamWriter(location.FullName, false, Encoding.UTF8);
+            
+            generated.WriteTo(writer);
         }
     }
 }

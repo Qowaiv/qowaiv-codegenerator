@@ -8,6 +8,10 @@
         /// <inheritdoc />
         public int CompareTo(object obj)
         {
+            if(obj is null)
+            {
+                return 1;
+            }
             if (obj is @TSvo other)
             {
                 return CompareTo(other);
