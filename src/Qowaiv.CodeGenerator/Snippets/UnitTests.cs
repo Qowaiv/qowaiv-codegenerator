@@ -560,29 +560,24 @@ namespace @Namespace.UnitTests
         [Test]
         public void CompareTo_ObjectTestStruct_0()
         {
-            object other = TestStruct;
-
-            var exp = 0;
-            var act = TestStruct.CompareTo(other);
-
-            Assert.AreEqual(exp, act);
+            Assert.AreEqual(0, TestStruct.CompareTo((object)TestStruct));
         }
 
-        /// <summary>Compare with null should throw an exception.</summary>
+        /// <summary>Compare with null should return 1.</summary>
         [Test]
         public void CompareTo_null_1()
         {
-            Assert.AreEqual(1, TestStruct.CompareTo(null));
+            object @null = null;
+            Assert.AreEqual(1, TestStruct.CompareTo(@null));
         }
 
         /// <summary>Compare with a random object should throw an exception.</summary>
         [Test]
-        public void CompareTo_newObject_ThrowsArgumentException()
+        public void CompareTo_newObject_Throw()
         {
             var x = Assert.Catch<ArgumentException>(() => TestStruct.CompareTo(new object()));
             Assert.AreEqual("Argument must be @TSvo. (Parameter 'obj')", x.Message);
         }
-
 
         [Test]
         public void LessThan_17LT19_IsTrue()
