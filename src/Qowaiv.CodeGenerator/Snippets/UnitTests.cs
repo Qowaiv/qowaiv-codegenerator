@@ -190,7 +190,7 @@ namespace @Namespace.UnitTests
             var info = new SerializationInfo(typeof(@TSvo), new FormatterConverter());
 
             Assert.Catch<SerializationException>(() =>
-                SerializationTest.DeserializeUsingConstructor<Hid>(info, default));
+                SerializationTest.DeserializeUsingConstructor<@TSvo>(info, default));
         }
 
         [Test]
@@ -238,7 +238,7 @@ namespace @Namespace.UnitTests
         [Test]
         public void XmlDeserialize_XmlString_AreEqual()
         {
-            var act = SerializationTest.XmlDeserialize<@TSvoSerializeObject>("xmlstring");
+            var act = SerializationTest.XmlDeserialize<@TSvo>("xmlstring");
             Assert.AreEqual(TestStruct, act);
         }
 

@@ -39,6 +39,11 @@ namespace Qowaiv.CodeGenerator.UnitTests
 
         [TestCase("Elo", typeof(double), "elo", "Qowaiv.Statistics", SvoFeatures.Continuous)]
 
+        [TestCase("Fraction", typeof(long), "fraction", "Qowaiv.Mathematics", SvoFeatures.Continuous
+            ^ SvoFeatures.ISerializable
+            ^ SvoFeatures.EqualsSvo
+            ^ SvoFeatures.Field)]
+
         [TestCase("InternetMediaType", typeof(string), "Internet media type", "Qowaiv.Web", SvoFeatures.AllExcludingCulture)]
         public async Task GenerateAsync_Qowaiv(string name, Type underlying, string fulleName, string ns, SvoFeatures features, string formatExceptionMessage = null)
         {
