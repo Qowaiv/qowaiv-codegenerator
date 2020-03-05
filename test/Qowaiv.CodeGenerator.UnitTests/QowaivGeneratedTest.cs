@@ -9,7 +9,7 @@ namespace Qowaiv.CodeGenerator.UnitTests
     public class QowaivGeneratedTest
     {
         [TestCase("Date", typeof(DateTime), "date", "Qowaiv", SvoFeatures.Continuous ^ SvoFeatures.Field)]
-        [TestCase("DateSpan", typeof(ulong), "date span", "Qowaiv", SvoFeatures.Continuous ^ SvoFeatures.EqualsSvo)]
+        [TestCase("DateSpan", typeof(ulong), "date span", "Qowaiv", SvoFeatures.Continuous ^ SvoFeatures.EqualsSvo ^ SvoFeatures.IConvertible)]
         [TestCase("EmailAddress", typeof(string), "email address", "Qowaiv", SvoFeatures.Default)]
         [TestCase("Gender", typeof(byte), "gender", "Qowaiv", SvoFeatures.Default | SvoFeatures.ComparisonOperators)]
         [TestCase("HouseNumber", typeof(int), "house number", "Qowaiv", SvoFeatures.Default | SvoFeatures.ComparisonOperators)]

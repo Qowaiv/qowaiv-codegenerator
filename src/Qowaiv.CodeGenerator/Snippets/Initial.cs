@@ -94,8 +94,18 @@ namespace @Namespace
 
         #endregion
 
+#if !NotIConvertible
+
+        /// <summary>Represents the underlying value as <see cref="IConvertible"/>.</summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private IConvertible convertable => m_Value;
+
+        /// <inheritdoc/>
+        TypeCode IConvertible.GetTypeCode() => TypeCode.@TSvo;
+#endif
+
 #if !NotCultureDependent
-   
+
         /// <summary>Converts the <see cref="string"/> to <see cref="@TSvo"/>.
         /// A return value indicates whether the conversion succeeded.
         /// </summary>

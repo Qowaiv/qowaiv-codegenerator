@@ -77,6 +77,7 @@ namespace Qowaiv.CodeGenerator
             await IXmlSerializable(members);
             await IJsonSerializable(members);
             await IFormattable(members);
+            await IConvertible(members);
             await Parsing(members);
             await Validation(members);
 
@@ -136,26 +137,37 @@ namespace Qowaiv.CodeGenerator
             if (Arguments.LacksFeature(SvoFeatures.IEquatable)) { return; }
             results.Add(await SvoSnippet.Embedded(nameof(IEquatable)).ParseAsync<NamespaceDeclarationSyntax>(Arguments));
         }
+        
         private async Task IComparable(List<MemberDeclarationSyntax> results)
         {
             if (Arguments.LacksFeature(SvoFeatures.IComparable)) { return; }
             results.Add(await SvoSnippet.Embedded(nameof(IComparable)).ParseAsync<MemberDeclarationSyntax>(Arguments));
         }
+
+        private async Task IConvertible(List<MemberDeclarationSyntax> results)
+        {
+            if (Arguments.LacksFeature(SvoFeatures.IConvertible)) { return; }
+            results.Add(await SvoSnippet.Embedded(nameof(IConvertible)).ParseAsync<MemberDeclarationSyntax>(Arguments));
+        }
+
         private async Task IFormattable(List<MemberDeclarationSyntax> results)
         {
             if (Arguments.LacksFeature(SvoFeatures.IFormattable)) { return; }
             results.Add(await SvoSnippet.Embedded(nameof(IFormattable)).ParseAsync<MemberDeclarationSyntax>(Arguments));
         }
+
         private async Task ISerializable(List<MemberDeclarationSyntax> results)
         {
             if (Arguments.LacksFeature(SvoFeatures.ISerializable)) { return; }
             results.Add(await SvoSnippet.Embedded(nameof(ISerializable)).ParseAsync<MemberDeclarationSyntax>(Arguments));
         }
+
         private async Task IXmlSerializable(List<MemberDeclarationSyntax> results)
         {
             if (Arguments.LacksFeature(SvoFeatures.IXmlSerializable)) { return; }
             results.Add(await SvoSnippet.Embedded(nameof(IXmlSerializable)).ParseAsync<MemberDeclarationSyntax>(Arguments));
         }
+
         private async Task IJsonSerializable(List<MemberDeclarationSyntax> results)
         {
             if (Arguments.LacksFeature(SvoFeatures.IJsonSerializable)) { return; }
@@ -167,6 +179,7 @@ namespace Qowaiv.CodeGenerator
             if (Arguments.LacksFeature(SvoFeatures.Parsing)) { return; }
             results.Add(await SvoSnippet.Embedded(nameof(Parsing)).ParseAsync<MemberDeclarationSyntax>(Arguments));
         }
+
         private async Task Validation(List<MemberDeclarationSyntax> results)
         {
             if (Arguments.LacksFeature(SvoFeatures.Validation)) { return; }
