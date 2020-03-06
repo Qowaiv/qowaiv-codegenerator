@@ -24,7 +24,9 @@
 #else
             var val = Parse(xml);
 #endif
+#if !NotField
             m_Value = val.m_Value;
+#endif
             OnReadXml(val);
         }
         partial void OnReadXml(@TSvo other);

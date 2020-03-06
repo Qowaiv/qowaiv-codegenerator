@@ -98,7 +98,7 @@ namespace @Namespace
 
         /// <summary>Represents the underlying value as <see cref="IConvertible"/>.</summary>
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private IConvertible convertable => m_Value;
+        private IConvertible Convertable => m_Value;
 
         /// <inheritdoc/>
         TypeCode IConvertible.GetTypeCode() => TypeCode.@TSvo;
