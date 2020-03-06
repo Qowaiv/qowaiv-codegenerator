@@ -24,7 +24,7 @@ namespace Qowaiv.CodeGenerator.UnitTests
         }
 
         [Test]
-        public async Task GenerateInitial_Int32Based_()
+        public async Task GenerateInitial()
         {
             var args = new SvoArguments
             {
@@ -33,8 +33,8 @@ namespace Qowaiv.CodeGenerator.UnitTests
                 FullName = "fraction",
                 Underlying = typeof(long),
                 Features = SvoFeatures.Continuous ^ SvoFeatures.ISerializable
-                ^ SvoFeatures.EqualsSvo
-                ^ SvoFeatures.Field,
+                 ^ SvoFeatures.EqualsSvo
+                 ^ SvoFeatures.Field,
             };
             var generator = new SvoCodeGenerator(args);
 
@@ -48,7 +48,11 @@ namespace Qowaiv.CodeGenerator.UnitTests
 
             Console.WriteLine(result.ToFullString());
 
+            Console.WriteLine(new string('-', 80));
 
+            result = await generator.GenerateAsync();
+
+            Console.WriteLine(result.ToFullString());
         }
     }
 }
