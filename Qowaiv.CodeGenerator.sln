@@ -6,13 +6,24 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7ED0D77E-7689-4CF8-BB04-6D087610800A}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		.gitattributes = .gitattributes
 		.gitignore = .gitignore
+		CODE_OF_CONDUCT.md = CODE_OF_CONDUCT.md
+		LICENSE.md = LICENSE.md
+		Qowaiv.ruleset = Qowaiv.ruleset
 		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Qowaiv.CodeGenerator", "src\Qowaiv.CodeGenerator\Qowaiv.CodeGenerator.csproj", "{43CADEF4-5432-4842-BD6F-AA65787CE23C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Qowaiv.CodeGenerator.UnitTests", "test\Qowaiv.CodeGenerator.UnitTests\Qowaiv.CodeGenerator.UnitTests.csproj", "{53F028D5-92CF-4843-B6CC-602A62492049}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{A212C48F-3A94-4EA3-97BC-BC9E5F291183}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{F7C4428F-22D4-4250-B9D5-19F1E2A65E34}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\dotnetcore-test.yml = .github\workflows\dotnetcore-test.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +42,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A212C48F-3A94-4EA3-97BC-BC9E5F291183} = {7ED0D77E-7689-4CF8-BB04-6D087610800A}
+		{F7C4428F-22D4-4250-B9D5-19F1E2A65E34} = {A212C48F-3A94-4EA3-97BC-BC9E5F291183}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F5A1D3FF-8A29-4E6D-8B06-28F2F689E3B1}
