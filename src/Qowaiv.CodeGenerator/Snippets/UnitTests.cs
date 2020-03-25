@@ -21,9 +21,9 @@ namespace @Namespace.UnitTests
         /// <summary>The test instance for most tests.</summary>
         public static readonly @TSvo TestStruct = @TSvo.Parse("");
 
-        /// <summary>@TSvo.Empty should be equal to the default of @FullName.</summary>
+        /// <summary><see cref="@TSvo.Empty"/> should be equal to the default of @FullName.</summary>
         [Test]
-        public void Empty_None_EqualsDefault()
+        public void Empty_EqualsDefault()
         {
             Assert.AreEqual(default(@TSvo), @TSvo.Empty);
         }

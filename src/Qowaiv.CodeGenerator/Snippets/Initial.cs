@@ -2,24 +2,25 @@
 // "GetHashCode" should not reference mutable fields
 // See README.md => Hashing
 
-using System;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
-using System.Runtime.Serialization;
-using Qowaiv;
-using Qowaiv.CodeGenerator;
-using Qowaiv.Formatting;
-using Qowaiv.Json;
 
 namespace @Namespace
 {
+    using System;
+    using System.ComponentModel;
+    using System.Diagnostics;
+    using System.Globalization;
+    using System.Runtime.Serialization;
+    using Qowaiv;
+    using Qowaiv.CodeGenerator;
+    using Qowaiv.Formatting;
+    using Qowaiv.Json;
+
     /// <summary>Represents a @FullName.</summary>
     [DebuggerDisplay("{DebuggerDisplay}")]
     [Serializable]
     [OpenApiDataType(description: "@FullName", type: "@TSvo", format: "@TSvo")]
     [TypeConverter(typeof(Conversion.@TSvoTypeConverter))]
-    public partial struct @TSvo
+    public partial struct @TSvo : ISerializable, IXmlSerializable, IFormattable, IEquatable<@TSvo>, IComparable, IComparable<@TSvo>
     {
         /// <summary>Represents an empty/not set @FullName.</summary>
         public static readonly @TSvo Empty;
@@ -53,6 +54,12 @@ namespace @Namespace
         /// <summary>Gets an XML string representation of the @FullName.</summary>
         private string ToXmlString() => ToString(CultureInfo.InvariantCulture);
 
+        /// <summary>Serializes the @FullName to a JSON node.</summary>
+        /// <returns>
+        /// The serialized JSON string.
+        /// </returns>
+        public string ToJson() => m_Value == default ? null : ToString(CultureInfo.InvariantCulture);
+
         /// <summary>Deserializes the @FullName from a JSON number.</summary>
         /// <param name="json">
         /// The JSON number to deserialize.
@@ -82,14 +89,14 @@ namespace @Namespace
 
         #region (Explicit) casting
 
-        /// <summary>Casts the @FullName to a <see cref="string" />.</summary>
+        /// <summary>Casts the @FullName to a <see cref="string"/>.</summary>
         public static explicit operator string(@TSvo val) => val.ToString(CultureInfo.CurrentCulture);
-        /// <summary>Casts a <see cref="string" /> to a @FullName.</summary>
+        /// <summary>Casts a <see cref="string"/> to a @FullName.</summary>
         public static explicit operator @TSvo(string str) => Parse(str, CultureInfo.CurrentCulture);
 
-        /// <summary>Casts the @FullName to a <see cref="@type" />.</summary>
+        /// <summary>Casts the @FullName to a <see cref="@type"/>.</summary>
         public static explicit operator @type(@TSvo val) => val.m_Value;
-        /// <summary>Casts a <see cref="@type" /> to a @FullName.</summary>
+        /// <summary>Casts a <see cref="@type"/> to a @FullName.</summary>
         public static explicit operator @TSvo(@type val) => Create(val);
 
         #endregion

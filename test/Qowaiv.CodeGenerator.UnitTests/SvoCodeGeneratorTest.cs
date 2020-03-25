@@ -28,13 +28,11 @@ namespace Qowaiv.CodeGenerator.UnitTests
         {
             var args = new SvoArguments
             {
-                Name = "Fraction",
-                Namespace = "Qowaiv.Mathematics",
-                FullName = "fraction",
-                Underlying = typeof(long),
-                Features = SvoFeatures.Continuous ^ SvoFeatures.ISerializable
-                 ^ SvoFeatures.EqualsSvo
-                 ^ SvoFeatures.Field,
+                Name = "MonthSpan",
+                Namespace = "Qowaiv",
+                FullName = "month span",
+                Underlying = typeof(int),
+                Features = SvoFeatures.Continuous,
             };
             var generator = new SvoCodeGenerator(args);
 
@@ -45,12 +43,6 @@ namespace Qowaiv.CodeGenerator.UnitTests
             Console.WriteLine(new string('-', 80));
 
             result = await generator.GenerateUnitTestsAsync();
-
-            Console.WriteLine(result.ToFullString());
-
-            Console.WriteLine(new string('-', 80));
-
-            result = await generator.GenerateAsync();
 
             Console.WriteLine(result.ToFullString());
         }
