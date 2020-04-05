@@ -20,6 +20,8 @@ namespace @Namespace.UnitTests
     {
         /// <summary>The test instance for most tests.</summary>
         public static readonly @TSvo TestStruct = @TSvo.Parse("");
+        public static readonly @TSvo Smaller = @TSvo.Parse("");
+        public static readonly @TSvo Bigger = @TSvo.Parse("");
 
         /// <summary><see cref="@TSvo.Empty"/> should be equal to the default of @FullName.</summary>
         [Test]
@@ -580,54 +582,41 @@ namespace @Namespace.UnitTests
         }
 
         [Test]
-        public void LessThan_17LT19_IsTrue()
+        public void Smaller_LessThan_Bigger_IsTrue()
         {
-            @TSvo l = 17;
-            @TSvo r = 19;
-
-            Assert.IsTrue(l < r);
+            Assert.IsTrue(Smaller < Bigger);
         }
         [Test]
-        public void GreaterThan_21LT19_IsTrue()
+        public void Bigger_GreaterThan_Smaller_IsTrue()
         {
-            @TSvo l = 21;
-            @TSvo r = 19;
-
-            Assert.IsTrue(l > r);
+            Assert.IsTrue(Bigger > Smaller);
         }
 
         [Test]
-        public void LessThanOrEqual_17LT19_IsTrue()
+        public void Smaller_LessThanOrEqual_Bigger_IsTrue()
         {
-            @TSvo l = 17;
-            @TSvo r = 19;
-
-            Assert.IsTrue(l <= r);
+            Assert.IsTrue(Smaller <= Bigger);
         }
         [Test]
-        public void GreaterThanOrEqual_21LT19_IsTrue()
+        public void Bigger_GreaterThanOrEqual_Smaller_IsTrue()
         {
-            @TSvo l = 21;
-            @TSvo r = 19;
-
-            Assert.IsTrue(l >= r);
+            Assert.IsTrue(Bigger >= Smaller);
         }
 
         [Test]
-        public void LessThanOrEqual_17LT17_IsTrue()
+        public void Smaller_LessThanOrEqual_Smaller_IsTrue()
         {
-            @TSvo l = 17;
-            @TSvo r = 17;
-
-            Assert.IsTrue(l <= r);
+            var left = Smaller;
+            var right = Smaller;
+            Assert.IsTrue(left <= right);
         }
-        [Test]
-        public void GreaterThanOrEqual_21LT21_IsTrue()
-        {
-            @TSvo l = 21;
-            @TSvo r = 21;
 
-            Assert.IsTrue(l >= r);
+        [Test]
+        public void Smaller_GreaterThanOrEqual_Smaller_IsTrue()
+        {
+            var left = Smaller;
+            var right = Smaller;
+            Assert.IsTrue(left >= right);
         }
 
         [Test]
