@@ -18,6 +18,7 @@ namespace @Namespace
     /// <summary>Represents a @FullName.</summary>
     [DebuggerDisplay("{DebuggerDisplay}")]
     [Serializable]
+    [SingleValueObject(SingleValueStaticOptions.All, typeof(@type))]
     [OpenApiDataType(description: "@FullName", type: "@TSvo", format: "@TSvo")]
     [TypeConverter(typeof(Conversion.@TSvoTypeConverter))]
     public partial struct @TSvo : ISerializable, IXmlSerializable, IFormattable, IEquatable<@TSvo>, IComparable, IComparable<@TSvo>
