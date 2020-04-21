@@ -15,6 +15,7 @@ namespace Qowaiv.CodeGenerator.UnitTests
         [TestCase("HouseNumber", typeof(int), "house number", "Qowaiv", SvoFeatures.Default | SvoFeatures.ComparisonOperators)]
         [TestCase("LocalDateTime", typeof(DateTime), "local date time", "Qowaiv", SvoFeatures.Continuous ^ SvoFeatures.Field)]
         [TestCase("Month", typeof(byte), "month", "Qowaiv", SvoFeatures.Default | SvoFeatures.ComparisonOperators)]
+        [TestCase("MonthSpan", typeof(int), "month span", "Qowaiv", SvoFeatures.Continuous)]
         [TestCase("Percentage", typeof(decimal), "percentage", "Qowaiv", SvoFeatures.Continuous ^ SvoFeatures.IFormattable)]
         [TestCase("PostalCode", typeof(string), "postal code", "Qowaiv", SvoFeatures.Default)]
         [TestCase("Uuid", typeof(Guid), "UUID", "Qowaiv", SvoFeatures.AllExcludingCulture ^ SvoFeatures.IsUnknown)]

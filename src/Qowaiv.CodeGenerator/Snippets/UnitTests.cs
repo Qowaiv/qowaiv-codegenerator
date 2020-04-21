@@ -23,9 +23,9 @@ namespace @Namespace.UnitTests
         public static readonly @TSvo Smaller = @TSvo.Parse("");
         public static readonly @TSvo Bigger = @TSvo.Parse("");
 
-        /// <summary>@TSvo.Empty should be equal to the default of @FullName.</summary>
+        /// <summary><see cref="@TSvo.Empty"/> should be equal to the default of @FullName.</summary>
         [Test]
-        public void Empty_None_EqualsDefault()
+        public void Empty_EqualsDefault()
         {
             Assert.AreEqual(default(@TSvo), @TSvo.Empty);
         }
@@ -89,7 +89,7 @@ namespace @Namespace.UnitTests
 
         /// <summary>TryParse null should be valid.</summary>
         [Test]
-        public void TyrParse_Null_IsValid()
+        public void TryParse_Null_IsValid()
         {
             Assert.IsTrue(@TSvo.TryParse(null, out var val));
             Assert.AreEqual(default(@TSvo), val);
@@ -97,7 +97,7 @@ namespace @Namespace.UnitTests
 
         /// <summary>TryParse string.Empty should be valid.</summary>
         [Test]
-        public void TyrParse_StringEmpty_IsValid()
+        public void TryParse_StringEmpty_IsValid()
         {
             Assert.IsTrue(@TSvo.TryParse(string.Empty, out var val));
             Assert.AreEqual(default(@TSvo), val);
@@ -105,7 +105,7 @@ namespace @Namespace.UnitTests
 
         /// <summary>TryParse "?" should be valid and the result should be @TSvo.Unknown.</summary>
         [Test]
-        public void TyrParse_Questionmark_IsUnkown()
+        public void TryParse_Questionmark_IsUnkown()
         {
             string str = "?";
             Assert.IsTrue(@TSvo.TryParse(str, out var val));
@@ -114,7 +114,7 @@ namespace @Namespace.UnitTests
 
         /// <summary>TryParse with specified string value should be valid.</summary>
         [Test]
-        public void TyrParse_StringValue_IsValid()
+        public void TryParse_StringValue_IsValid()
         {
             string str = "string";
             Assert.IsTrue(@TSvo.TryParse(str, out var val));
@@ -123,7 +123,7 @@ namespace @Namespace.UnitTests
 
         /// <summary>TryParse with specified string value should be invalid.</summary>
         [Test]
-        public void TyrParse_StringValue_IsNotValid()
+        public void TryParse_StringValue_IsNotValid()
         {
             string str = "invalid";
             Assert.IsFalse(@TSvo.TryParse(str, out var val));
@@ -374,6 +374,14 @@ namespace @Namespace.UnitTests
         {
             var actual = JsonTester.Read<@TSvo>(json);
             Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void ToJson_TestStruct_JsonString()
+        {
+            var act = JsonTester.Write(TestStruct);
+            var exp = "JSON STRING";
+            Assert.AreEqual(exp, act);
         }
 
         [Test]
