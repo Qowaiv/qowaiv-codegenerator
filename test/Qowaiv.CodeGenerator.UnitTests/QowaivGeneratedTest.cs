@@ -22,6 +22,7 @@ namespace Qowaiv.CodeGenerator.UnitTests
         [TestCase("WeekDate", typeof(Date), "week date", "Qowaiv", SvoFeatures.Continuous ^ SvoFeatures.Field ^ SvoFeatures.ISerializable)]
         [TestCase("Year", typeof(short), "year", "Qowaiv", SvoFeatures.Default | SvoFeatures.ComparisonOperators)]
         [TestCase("YesNo", typeof(byte), "yes-no", "Qowaiv", SvoFeatures.Default)]
+        [TestCase("TelephoneNumber", typeof(string), "telephone number", "Qowaiv", SvoFeatures.Default)]
 
         [TestCase("Amount", typeof(decimal), "amount", "Qowaiv.Financial", SvoFeatures.Continuous, "QowaivMessages.FormatExceptionFinancialAmount")]
         [TestCase("BusinessIdentifierCode", typeof(string), "BIC", "Qowaiv.Financial", SvoFeatures.Default)]
