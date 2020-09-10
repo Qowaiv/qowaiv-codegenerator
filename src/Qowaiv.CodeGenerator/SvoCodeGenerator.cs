@@ -77,7 +77,6 @@ namespace Qowaiv.CodeGenerator
             await IXmlSerializable(members);
             await IJsonSerializable(members);
             await IFormattable(members);
-            await IConvertible(members);
             await Parsing(members);
             await Validation(members);
 
@@ -142,12 +141,6 @@ namespace Qowaiv.CodeGenerator
         {
             if (Arguments.LacksFeature(SvoFeatures.IComparable)) { return; }
             results.Add(await SvoSnippet.Embedded(nameof(IComparable)).ParseAsync<MemberDeclarationSyntax>(Arguments));
-        }
-
-        private async Task IConvertible(List<MemberDeclarationSyntax> results)
-        {
-            if (Arguments.LacksFeature(SvoFeatures.IConvertible)) { return; }
-            results.Add(await SvoSnippet.Embedded(nameof(IConvertible)).ParseAsync<MemberDeclarationSyntax>(Arguments));
         }
 
         private async Task IFormattable(List<MemberDeclarationSyntax> results)
