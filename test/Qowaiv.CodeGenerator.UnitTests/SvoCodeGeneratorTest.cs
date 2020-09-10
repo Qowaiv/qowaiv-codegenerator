@@ -28,11 +28,11 @@ namespace Qowaiv.CodeGenerator.UnitTests
         {
             var args = new SvoArguments
             {
-                Name = "MonthSpan",
+                Name = "TelephoneNumber",
                 Namespace = "Qowaiv",
-                FullName = "month span",
-                Underlying = typeof(int),
-                Features = SvoFeatures.Continuous,
+                FullName = "telephone number",
+                Underlying = typeof(string),
+                Features = SvoFeatures.Default,
             };
             var generator = new SvoCodeGenerator(args);
 

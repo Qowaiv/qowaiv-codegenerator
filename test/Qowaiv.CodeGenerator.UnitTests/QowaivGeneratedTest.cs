@@ -18,11 +18,12 @@ namespace Qowaiv.CodeGenerator.UnitTests
         [TestCase("MonthSpan", typeof(int), "month span", "Qowaiv", SvoFeatures.Continuous)]
         [TestCase("Percentage", typeof(decimal), "percentage", "Qowaiv", SvoFeatures.Continuous ^ SvoFeatures.IFormattable)]
         [TestCase("PostalCode", typeof(string), "postal code", "Qowaiv", SvoFeatures.Default)]
+        [TestCase("TelephoneNumber", typeof(string), "telephone number", "Qowaiv", SvoFeatures.Default)]
         [TestCase("Uuid", typeof(Guid), "UUID", "Qowaiv", SvoFeatures.AllExcludingCulture ^ SvoFeatures.IsUnknown)]
         [TestCase("WeekDate", typeof(Date), "week date", "Qowaiv", SvoFeatures.Continuous ^ SvoFeatures.Field ^ SvoFeatures.ISerializable)]
         [TestCase("Year", typeof(short), "year", "Qowaiv", SvoFeatures.Default | SvoFeatures.ComparisonOperators)]
         [TestCase("YesNo", typeof(byte), "yes-no", "Qowaiv", SvoFeatures.Default)]
-        [TestCase("TelephoneNumber", typeof(string), "telephone number", "Qowaiv", SvoFeatures.Default)]
+        
 
         [TestCase("Amount", typeof(decimal), "amount", "Qowaiv.Financial", SvoFeatures.Continuous, "QowaivMessages.FormatExceptionFinancialAmount")]
         [TestCase("BusinessIdentifierCode", typeof(string), "BIC", "Qowaiv.Financial", SvoFeatures.Default)]
