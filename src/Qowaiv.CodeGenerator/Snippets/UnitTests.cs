@@ -86,222 +86,6 @@
             Assert.IsFalse(TestStruct.IsEmptyOrUnknown());
         }
 
-        /// <summary>TryParse null should be valid.</summary>
-        [Test]
-        public void TryParse_Null_IsValid()
-        {
-            Assert.IsTrue(@TSvo.TryParse(null, out var val));
-            Assert.AreEqual(default(@TSvo), val);
-        }
-
-        /// <summary>TryParse string.Empty should be valid.</summary>
-        [Test]
-        public void TryParse_StringEmpty_IsValid()
-        {
-            Assert.IsTrue(@TSvo.TryParse(string.Empty, out var val));
-            Assert.AreEqual(default(@TSvo), val);
-        }
-
-        /// <summary>TryParse "?" should be valid and the result should be @TSvo.Unknown.</summary>
-        [Test]
-        public void TryParse_Questionmark_IsUnkown()
-        {
-            string str = "?";
-            Assert.IsTrue(@TSvo.TryParse(str, out var val));
-            Assert.IsTrue(val.IsUnknown(), "Should be unknown");
-        }
-
-        /// <summary>TryParse with specified string value should be valid.</summary>
-        [Test]
-        public void TryParse_StringValue_IsValid()
-        {
-            string str = "string";
-            Assert.IsTrue(@TSvo.TryParse(str, out var val));
-            Assert.AreEqual(str, val.ToString());
-        }
-
-        /// <summary>TryParse with specified string value should be invalid.</summary>
-        [Test]
-        public void TryParse_StringValue_IsNotValid()
-        {
-            string str = "invalid";
-            Assert.IsFalse(@TSvo.TryParse(str, out var val));
-            Assert.AreEqual(default(@TSvo), val);
-        }
-
-        [Test]
-        public void Parse_Unknown_AreEqual()
-        {
-            using (new CultureInfoScope("en-GB"))
-            {
-                var act = @TSvo.Parse("?");
-                var exp = @TSvo.Unknown;
-                Assert.AreEqual(exp, act);
-            }
-        }
-
-        [Test]
-        public void Parse_InvalidInput_ThrowsFormatException()
-        {
-            using (new CultureInfoScope("en-GB"))
-            {
-                Assert.Catch<FormatException>
-                (() =>
-                {
-                    @TSvo.Parse("InvalidInput");
-                },
-                "Not a valid @FullName");
-            }
-        }
-
-        [Test]
-        public void TryParse_TestStructInput_AreEqual()
-        {
-            using (new CultureInfoScope("en-GB"))
-            {
-                var exp = TestStruct;
-                var act = @TSvo.TryParse(exp.ToString());
-
-                Assert.AreEqual(exp, act);
-            }
-        }
-
-        [Test]
-        public void TryParse_InvalidInput_DefaultValue()
-        {
-            using (new CultureInfoScope("en-GB"))
-            {
-                var exp = default(@TSvo);
-                var act = @TSvo.TryParse("InvalidInput");
-
-                Assert.AreEqual(exp, act);
-            }
-        }
-
-        [Test]
-        public void Constructor_SerializationInfoIsNull_Throws()
-        {
-            Assert.Catch<ArgumentNullException>(() =>
-               SerializationTest.DeserializeUsingConstructor<@TSvo>(null, default));
-        }
-
-        [Test]
-        public void Constructor_InvalidSerializationInfo_Throws()
-        {
-            var info = new SerializationInfo(typeof(@TSvo), new FormatterConverter());
-
-            Assert.Catch<SerializationException>(() =>
-                SerializationTest.DeserializeUsingConstructor<@TSvo>(info, default));
-        }
-
-        [Test]
-        public void GetObjectData_NulSerializationInfo_Throws()
-        {
-            ISerializable obj = TestStruct;
-            Assert.Catch<ArgumentNullException>(() => obj.GetObjectData(null, default));
-        }
-
-        [Test]
-        public void GetObjectData_SerializationInfo_AreEqual()
-        {
-            ISerializable obj = TestStruct;
-            var info = new SerializationInfo(typeof(@TSvo), new FormatterConverter());
-            obj.GetObjectData(info, default);
-
-            Assert.AreEqual((@type)2, info.GetValue("Value", typeof(@type)));
-        }
-
-        [Test]
-        public void SerializeDeserialize_TestStruct_AreEqual()
-        {
-            var input = TestStruct;
-            var exp = TestStruct;
-            var act = SerializationTest.SerializeDeserialize(input);
-            Assert.AreEqual(exp, act);
-        }
-        [Test]
-        public void DataContractSerializeDeserialize_TestStruct_AreEqual()
-        {
-            var input = TestStruct;
-            var exp = TestStruct;
-            var act = SerializationTest.DataContractSerializeDeserialize(input);
-            Assert.AreEqual(exp, act);
-        }
-
-        [TestCase("Invalid input")]
-        [TestCase("2017-06-11")]
-        [TestCase(long.MinValue)]
-        [TestCase(double.MinValue)]
-        public void FromJson_Invalid_Throws(object json)
-        {
-            Assert.Catch<FormatException>(() => JsonTester.Read<@TSvo>(json));
-        }
-
-        [TestCase("yes", "yes")]
-        [TestCase("yes", true)]
-        [TestCase("yes", 1)]
-        [TestCase("no", 0.0)]
-        [TestCase("?", "unknown")]
-        public void FromJson(@TSvo expected, object json)
-        {
-            var actual = JsonTester.Read<@TSvo>(json);
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void ToJson_TestStruct_JsonString()
-        {
-            var act = JsonTester.Write(TestStruct);
-            var exp = "JSON STRING";
-            Assert.AreEqual(exp, act);
-        }
-
-        [Test]
-        public void ToString_Empty_StringEmpty()
-        {
-            var act = @TSvo.Empty.ToString();
-            var exp = "";
-            Assert.AreEqual(exp, act);
-        }
-
-        [Test]
-        public void ToString_Unknown_QuestionMark()
-        {
-            var act = @TSvo.Unknown.ToString();
-            var exp = "?";
-            Assert.AreEqual(exp, act);
-        }
-
-        [Test]
-        public void ToString_CustomFormatter_SupportsCustomFormatting()
-        {
-            var act = TestStruct.ToString("Unit Test Format", new UnitTestFormatProvider());
-            var exp = "Unit Test Formatter, value: 'Some Formatted Value', format: 'Unit Test Format'";
-
-            Assert.AreEqual(exp, act);
-        }
-        [TestCase("en-US", "", "ComplexPattern", "ComplexPattern")]
-        [TestCase("nl-BE", null, "1600,1", "1600,1")]
-        [TestCase("en-GB", null, "1600.1", "1600.1")]
-        [TestCase("nl-BE", "0000", "800", "0800")]
-        [TestCase("en-GB", "0000", "800", "0800")]
-        public void ToString_UsingCultureWithPattern(string culture, string format, string str, string expected)
-        {
-            using (new CultureInfoScope(culture))
-            {
-                var actual = @TSvo.Parse(str).ToString(format);
-                Assert.AreEqual(expected, actual);
-            }
-        }
-
-        [Test]
-        public void ToString_FormatValueSpanishEcuador_AreEqual()
-        {
-            var act = @TSvo.Parse("1700").ToString("00000.0", new CultureInfo("es-EC"));
-            var exp = "01700,0";
-            Assert.AreEqual(exp, act);
-        }
-
         [Test]
         public void DebuggerDisplay_DebugToString_HasAttribute()
         {
@@ -337,128 +121,6 @@
         public void GetHash_TestStruct_Hash()
         {
             Assert.AreEqual(-1, TestStruct.GetHashCode());
-        }
-
-        [Test]
-        public void Equals_EmptyEmpty_IsTrue()
-        {
-            Assert.IsTrue(@TSvo.Empty.Equals(@TSvo.Empty));
-        }
-
-        [Test]
-        public void Equals_FormattedAndUnformatted_IsTrue()
-        {
-            var l = @TSvo.Parse("formatted", CultureInfo.InvariantCulture);
-            var r = @TSvo.Parse("unformatted", CultureInfo.InvariantCulture);
-
-            Assert.IsTrue(l.Equals(r));
-        }
-
-        [Test]
-        public void Equals_TestStructTestStruct_IsTrue()
-        {
-            Assert.IsTrue(TestStruct.Equals(TestStruct));
-        }
-
-        [Test]
-        public void Equals_TestStructEmpty_IsFalse()
-        {
-            Assert.IsFalse(TestStruct.Equals(@TSvo.Empty));
-        }
-
-        [Test]
-        public void Equals_EmptyTestStruct_IsFalse()
-        {
-            Assert.IsFalse(@TSvo.Empty.Equals(TestStruct));
-        }
-
-        [Test]
-        public void Equals_TestStructObjectTestStruct_IsTrue()
-        {
-            Assert.IsTrue(TestStruct.Equals((object)TestStruct));
-        }
-
-        [Test]
-        public void Equals_TestStructNull_IsFalse()
-        {
-            Assert.IsFalse(TestStruct.Equals(null));
-        }
-
-        [Test]
-        public void Equals_TestStructObject_IsFalse()
-        {
-            Assert.IsFalse(TestStruct.Equals(new object()));
-        }
-
-        [Test]
-        public void OperatorIs_TestStructTestStruct_IsTrue()
-        {
-            var l = TestStruct;
-            var r = TestStruct;
-            Assert.IsTrue(l == r);
-        }
-
-        [Test]
-        public void OperatorIsNot_TestStructTestStruct_IsFalse()
-        {
-            var l = TestStruct;
-            var r = TestStruct;
-            Assert.IsFalse(l != r);
-        }
-
-        /// <summary>Orders a list of @FullNames ascending.</summary>
-        [Test]
-        public void OrderBy_@TSvo_AreEqual()
-        {
-            var item0 = @TSvo.Parse("ComplexRegexPatternA");
-            var item1 = @TSvo.Parse("ComplexRegexPatternB");
-            var item2 = @TSvo.Parse("ComplexRegexPatternC");
-            var item3 = @TSvo.Parse("ComplexRegexPatternD");
-
-            var inp = new List<@TSvo> { @TSvo.Empty, item3, item2, item0, item1, @TSvo.Empty };
-            var exp = new List<@TSvo> { @TSvo.Empty, @TSvo.Empty, item0, item1, item2, item3 };
-            var act = inp.OrderBy(item => item).ToList();
-
-            CollectionAssert.AreEqual(exp, act);
-        }
-
-        /// <summary>Orders a list of @FullNames descending.</summary>
-        [Test]
-        public void OrderByDescending_@TSvo_AreEqual()
-        {
-            var item0 = @TSvo.Parse("ComplexRegexPatternA");
-            var item1 = @TSvo.Parse("ComplexRegexPatternB");
-            var item2 = @TSvo.Parse("ComplexRegexPatternC");
-            var item3 = @TSvo.Parse("ComplexRegexPatternD");
-
-            var inp = new List<@TSvo> { @TSvo.Empty, item3, item2, item0, item1, @TSvo.Empty };
-            var exp = new List<@TSvo> { item3, item2, item1, item0, @TSvo.Empty, @TSvo.Empty };
-            var act = inp.OrderByDescending(item => item).ToList();
-
-            CollectionAssert.AreEqual(exp, act);
-        }
-
-        /// <summary>Compare with a to object casted instance should be fine.</summary>
-        [Test]
-        public void CompareTo_ObjectTestStruct_0()
-        {
-            Assert.AreEqual(0, TestStruct.CompareTo((object)TestStruct));
-        }
-
-        /// <summary>Compare with null should return 1.</summary>
-        [Test]
-        public void CompareTo_null_1()
-        {
-            object @null = null;
-            Assert.AreEqual(1, TestStruct.CompareTo(@null));
-        }
-
-        /// <summary>Compare with a random object should throw an exception.</summary>
-        [Test]
-        public void CompareTo_newObject_Throw()
-        {
-            var x = Assert.Catch<ArgumentException>(() => TestStruct.CompareTo(new object()));
-            Assert.AreEqual("Argument must be @TSvo. (Parameter 'obj')", x.Message);
         }
 
         [Test]
@@ -506,6 +168,7 @@
             var act = @TSvo.Empty.Length;
             Assert.AreEqual(exp, act);
         }
+        
         [Test]
         public void Length_TestStruct_IntValue()
         {
@@ -533,6 +196,113 @@
         {
             @type? value = default;
             Assert.IsFalse(@TSvo.IsValid(value));
+        }
+    }
+
+    public class Has_constant
+    {
+        [Test]
+        public void Empty_represent_default_value()
+        {
+            Assert.AreEqual(default(@Svo), @Svo.Empty);
+        }
+    }
+
+    public class Is_equal_by_value
+    {
+        [Test]
+        public void not_equal_to_null()
+        {
+            Assert.IsFalse(Svo.@Svo.Equals(null));
+        }
+
+        [Test]
+        public void not_equal_to_other_type()
+        {
+            Assert.IsFalse(Svo.@Svo.Equals(new object()));
+        }
+
+        [Test]
+        public void not_equal_to_different_value()
+        {
+            Assert.IsFalse(Svo.@Svo.Equals(@Svo.Parse("different")));
+        }
+
+        [Test]
+        public void equal_to_same_value()
+        {
+            Assert.IsTrue(Svo.@Svo.Equals(@Svo.Parse("same")));
+        }
+
+        [Test]
+        public void equal_operator_returns_true_for_same_values()
+        {
+            Assert.IsTrue(Svo.@Svo == @Svo.Parse("same"));
+        }
+
+        [Test]
+        public void equal_operator_returns_false_for_different_values()
+        {
+            Assert.IsFalse(Svo.@Svo == @Svo.Parse("different"));
+        }
+
+        [Test]
+        public void not_equal_operator_returns_false_for_same_values()
+        {
+            Assert.IsFalse(Svo.@Svo != @Svo.Parse("same"));
+        }
+
+        [Test]
+        public void not_equal_operator_returns_true_for_different_values()
+        {
+            Assert.IsTrue(Svo.@Svo != @Svo.Parse("different"));
+        }
+    }
+
+    public class Can_be_parsed
+    {
+        [Test]
+        public void from_null_string_represents_Empty()
+        {
+            Assert.AreEqual(@Svo.Empty, @Svo.Parse(null));
+        }
+
+        [Test]
+        public void from_empty_string_represents_Empty()
+        {
+            Assert.AreEqual(@Svo.Empty, @Svo.Parse(string.Empty));
+        }
+
+        [Test]
+        public void from_question_mark_represents_Unknown()
+        {
+            Assert.AreEqual(@Svo.Unknown, @Svo.Parse("?"));
+        }
+
+        [TestCase("en", "validInput")]
+        public void from_string_with_different_formatting_and_cultures(CultureInfo culture, string input)
+        {
+            using (culture.Scoped())
+            {
+                var parsed = @Svo.Parse(input);
+                Assert.AreEqual(Svo.@Svo, parsed);
+            }
+        }
+
+        [Test]
+        public void from_valid_input_only_otherwise_throws_on_Parse()
+        {
+            using (TestCultures.En_GB.Scoped())
+            {
+                var exception = Assert.Throws<FormatException>(() => @Svo.Parse("invalid input"));
+                Assert.AreEqual("Not a valid SVO value", exception.Message);
+            }
+        }
+
+        [Test]
+        public void from_valid_input_only_otherwise_return_false_on_TryParse()
+        {
+            Assert.IsFalse(@Svo.TryParse("invalid input", out _));
         }
     }
 
