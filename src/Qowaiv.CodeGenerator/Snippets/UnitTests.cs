@@ -109,20 +109,6 @@
             DebuggerDisplayAssert.HasResult("ComplexPattern", TestStruct);
         }
 
-        /// <summary>GetHash should not fail for @TSvo.Empty.</summary>
-        [Test]
-        public void GetHash_Empty_Hash()
-        {
-            Assert.AreEqual(-1, @TSvo.Empty.GetHashCode());
-        }
-
-        /// <summary>GetHash should not fail for the test struct.</summary>
-        [Test]
-        public void GetHash_TestStruct_Hash()
-        {
-            Assert.AreEqual(-1, TestStruct.GetHashCode());
-        }
-
         [Test]
         public void Smaller_LessThan_Bigger_IsTrue()
         {
@@ -257,6 +243,14 @@
         {
             Assert.IsTrue(Svo.@Svo != @Svo.Parse("different"));
         }
+
+        [TestCase("", 0)]
+        [TestCase("svoValue", 2)]
+        public void hash_code_is_value_based(@Svo svo, int hashcode)
+        {
+            Assert.AreEqual(hashcode, svo.GetHashCode());
+        }
+
     }
 
     public class Can_be_parsed
