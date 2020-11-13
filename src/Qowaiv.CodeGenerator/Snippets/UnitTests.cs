@@ -685,6 +685,62 @@
         }
     }
 
+    public class Supports_type_conversion
+    {
+        [Test]
+        public void via_TypeConverter_registered_with_attribute()
+        {
+            TypeConverterAssert.ConverterExists(typeof(@Svo));
+        }
+
+        [Test]
+        public void from_null_string()
+        {
+            using (TestCultures.En_GB.Scoped())
+            {
+                TypeConverterAssert.ConvertFromEquals(default(@Svo), null);
+            }
+        }
+
+        [Test]
+        public void from_empty_string()
+        {
+            using (TestCultures.En_GB.Scoped())
+            {
+                TypeConverterAssert.ConvertFromEquals(default(@Svo), string.Empty);
+            }
+        }
+
+        [Test]
+        public void from_string()
+        {
+            using (TestCultures.En_GB.Scoped())
+            {
+                TypeConverterAssert.ConvertFromEquals(Svo.@Svo, Svo.@Svo.ToString());
+            }
+        }
+
+        [Test]
+        public void to_string()
+        {
+            using (TestCultures.En_GB.Scoped())
+            {
+                TypeConverterAssert.ConvertToStringEquals(Svo.@Svo.ToString(), Svo.@Svo);
+            }
+        }
+
+        [Test]
+        public void from_int()
+        {
+            TypeConverterAssert.ConvertFromEquals(17, Svo.@Svo);
+        }
+
+        [Test]
+        public void to_int()
+        {
+            TypeConverterAssert.ConvertToEquals(17, Svo.@Svo);
+        }
+    }
 
     public class Supports_JSON_serialization
     {
