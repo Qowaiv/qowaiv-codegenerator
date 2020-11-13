@@ -1,20 +1,20 @@
-﻿using NUnit.Framework;
-using Qowaiv.Globalization;
-using Qowaiv.TestTools;
-using Qowaiv.TestTools.Formatting;
-using Qowaiv.UnitTests.Json;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.Serialization;
-using System.Threading;
-using System.Xml.Serialization;
-using @Model.Namespace;
-
-namespace @Namespace.UnitTests
+﻿namespace @TSvo_specs
 {
+    using NUnit.Framework;
+    using Qowaiv.Globalization;
+    using Qowaiv.TestTools;
+    using Qowaiv.TestTools.Formatting;
+    using Qowaiv.UnitTests.Json;
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
+    using System.Reflection;
+    using System.Runtime.Serialization;
+    using System.Threading;
+    using System.Xml.Serialization;
+    using @Model.Namespace;
+
     /// <summary>Tests the @FullName SVO.</summary>
     public class @TSvoTest
     {
@@ -227,133 +227,6 @@ namespace @Namespace.UnitTests
             var exp = TestStruct;
             var act = SerializationTest.DataContractSerializeDeserialize(input);
             Assert.AreEqual(exp, act);
-        }
-
-        [Test]
-        public void XmlSerialize_TestStruct_AreEqual()
-        {
-            var act = SerializationTest.XmlSerialize(TestStruct);
-            var exp = "xmlstring";
-            Assert.AreEqual(exp, act);
-        }
-
-        [Test]
-        public void XmlDeserialize_XmlString_AreEqual()
-        {
-            var act = SerializationTest.XmlDeserialize<@TSvo>("xmlstring");
-            Assert.AreEqual(TestStruct, act);
-        }
-
-        [Test]
-        public void SerializeDeserialize_@TSvoSerializeObject_AreEqual()
-        {
-            var input = new @TSvoSerializeObject
-            {
-                Id = 17,
-                Obj = TestStruct,
-                Date = new DateTime(1970, 02, 14),
-            };
-            var exp = new @TSvoSerializeObject
-            {
-                Id = 17,
-                Obj = TestStruct,
-                Date = new DateTime(1970, 02, 14),
-            };
-            var act = SerializationTest.SerializeDeserialize(input);
-            Assert.AreEqual(exp.Id, act.Id, "Id");
-            Assert.AreEqual(exp.Obj, act.Obj, "Obj");
-            Assert.AreEqual(exp.Date, act.Date, "Date");
-        }
-
-        [Test]
-        public void XmlSerializeDeserialize_@TSvoSerializeObject_AreEqual()
-        {
-            var input = new @TSvoSerializeObject
-            {
-                Id = 17,
-                Obj = TestStruct,
-                Date = new DateTime(1970, 02, 14),
-            };
-            var exp = new @TSvoSerializeObject
-            {
-                Id = 17,
-                Obj = TestStruct,
-                Date = new DateTime(1970, 02, 14),
-            };
-            var act = SerializationTest.XmlSerializeDeserialize(input);
-            Assert.AreEqual(exp.Id, act.Id, "Id");
-            Assert.AreEqual(exp.Obj, act.Obj, "Obj");
-            Assert.AreEqual(exp.Date, act.Date, "Date");
-        }
-
-        [Test]
-        public void DataContractSerializeDeserialize_@TSvoSerializeObject_AreEqual()
-        {
-            var input = new @TSvoSerializeObject
-            {
-                Id = 17,
-                Obj = TestStruct,
-                Date = new DateTime(1970, 02, 14),
-            };
-            var exp = new @TSvoSerializeObject
-            {
-                Id = 17,
-                Obj = TestStruct,
-                Date = new DateTime(1970, 02, 14),
-            };
-            var act = SerializationTest.DataContractSerializeDeserialize(input);
-            Assert.AreEqual(exp.Id, act.Id, "Id");
-            Assert.AreEqual(exp.Obj, act.Obj, "Obj");
-            Assert.AreEqual(exp.Date, act.Date, "Date");
-        }
-
-        [Test]
-        public void SerializeDeserialize_Default_AreEqual()
-        {
-            var input = new @TSvoSerializeObject
-            {
-                Id = 17,
-                Obj = default,
-                Date = new DateTime(1970, 02, 14),
-            };
-            var exp = new @TSvoSerializeObject
-            {
-                Id = 17,
-                Obj = default,
-                Date = new DateTime(1970, 02, 14),
-            };
-            var act = SerializationTest.SerializeDeserialize(input);
-            Assert.AreEqual(exp.Id, act.Id, "Id");
-            Assert.AreEqual(exp.Obj, act.Obj, "Obj");
-            Assert.AreEqual(exp.Date, act.Date, "Date");
-        }
-
-        [Test]
-        public void XmlSerializeDeserialize_Default_AreEqual()
-        {
-            var input = new @TSvoSerializeObject
-            {
-                Id = 17,
-                Obj = default,
-                Date = new DateTime(1970, 02, 14),
-            };
-            var exp = new @TSvoSerializeObject
-            {
-                Id = 17,
-                Obj = default,
-                Date = new DateTime(1970, 02, 14),
-            };
-            var act = SerializationTest.XmlSerializeDeserialize(input);
-            Assert.AreEqual(exp.Id, act.Id, "Id");
-            Assert.AreEqual(exp.Obj, act.Obj, "Obj");
-            Assert.AreEqual(exp.Date, act.Date, "Date");
-        }
-
-        [Test]
-        public void GetSchema_None_IsNull()
-        {
-            IXmlSerializable obj = TestStruct;
-            Assert.IsNull(obj.GetSchema());
         }
 
         [TestCase("Invalid input")]
@@ -765,11 +638,134 @@ namespace @Namespace.UnitTests
         }
     }
 
-    [Serializable]
-    public class @TSvoSerializeObject
+    public class Has_custom_formatting
     {
-        public int Id { get; set; }
-        public @TSvo Obj { get; set; }
-        public DateTime Date { get; set; }
+        [Test]
+        public void default_value_is_represented_as_string_empty()
+        {
+            Assert.AreEqual(string.Empty, default(@Svo).ToString());
+        }
+
+        [Test]
+        public void unknown_value_is_represented_as_unknown()
+        {
+            Assert.AreEqual("unknown", @Svo.Unknown.ToString());
+        }
+
+        [Test]
+        public void custom_format_provider_is_applied()
+        {
+            var formatted = Svo.@Svo.ToString("SomeFormat", new UnitTestFormatProvider());
+            Assert.AreEqual("Unit Test Formatter, value: 'SvoValue', format: 'SomeFormat'", formatted);
+        }
+
+        [TestCase("en-GB", null, "Yes", "yes")]
+        [TestCase("nl-BE", "f", "Yes", "ja")]
+        [TestCase("es-EQ", "F", "Yes", "Si")]
+        [TestCase("en-GB", null, "No", "no")]
+        [TestCase("nl-BE", "f", "No", "nee")]
+        [TestCase("es-EQ", "F", "No", "No")]
+        [TestCase("en-GB", "C", "Yes", "Y")]
+        [TestCase("nl-BE", "C", "Yes", "J")]
+        [TestCase("es-EQ", "C", "Yes", "S")]
+        [TestCase("en-GB", "C", "No", "N")]
+        [TestCase("nl-BE", "c", "No", "n")]
+        [TestCase("es-EQ", "c", "No", "n")]
+        [TestCase("en-US", "B", "Yes", "True")]
+        [TestCase("en-US", "b", "No", "false")]
+        [TestCase("en-US", "i", "Yes", "1")]
+        [TestCase("en-US", "i", "No", "0")]
+        [TestCase("en-US", "i", "?", "?")]
+        public void culture_dependend(CultureInfo culture, string format, YesNo svo, string expected)
+        {
+            using (culture.Scoped())
+            {
+                Assert.AreEqual(expected, svo.ToString(format));
+            }
+        }
+    }
+
+
+    public class Supports_JSON_serialization
+    {
+        [TestCase("?", "unknown")]
+        public void convension_based_deserialization(@Svo expected, object json)
+        {
+            var actual = JsonTester.Read<@Svo>(json);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(null, "")]
+        public void convension_based_serialization(object expected, @Svo svo)
+        {
+            var serialized = JsonTester.Write(svo);
+            Assert.AreEqual(expected, serialized);
+        }
+
+        [TestCase("Invalid input", typeof(FormatException))]
+        [TestCase("2017-06-11", typeof(FormatException))]
+        [TestCase(5L, typeof(ArgumentOutOfRangeException))]
+        public void throws_for_invalid_json(object json, Type exceptionType)
+        {
+            var exception = Assert.Catch(() => JsonTester.Read<@Svo>(json));
+            Assert.IsInstanceOf(exceptionType, exception);
+        }
+    }
+
+    public class Supports_XML_serialization
+    {
+        [Test]
+        public void using_XmlSerializer_to_serialize()
+        {
+            var xml = SerializationTest.XmlSerialize(Svo.@Svo);
+            Assert.AreEqual("yes", xml);
+        }
+
+        [Test]
+        public void using_XmlSerializer_to_deserialize()
+        {
+            var svo = SerializationTest.XmlDeserialize<YesNo>("yes");
+            Assert.AreEqual(Svo.@Svo, svo);
+        }
+
+        [Test]
+        public void using_DataContractSerializer()
+        {
+            var round_tripped = SerializationTest.DataContractSerializeDeserialize(Svo.@Svo);
+            Assert.AreEqual(Svo.@Svo, round_tripped);
+        }
+
+        [Test]
+        public void as_part_of_a_structure()
+        {
+            var structure = XmlStructure.New(Svo.@Svo);
+            var round_tripped = SerializationTest.XmlSerializeDeserialize(structure);
+
+            Assert.AreEqual(structure, round_tripped);
+        }
+
+        [Test]
+        public void has_no_custom_XML_schema()
+        {
+            IXmlSerializable obj = Svo.@Svo;
+            Assert.IsNull(obj.GetSchema());
+        }
+    }
+
+    public class Supports_binary_serialization
+    {
+        [Test]
+        public void using_BinaryFormatter()
+        {
+            var round_tripped = SerializationTest.BinaryFormatterSerializeDeserialize(Svo.@Svo);
+            Assert.AreEqual(Svo.@Svo, round_tripped);
+        }
+
+        [Test]
+        public void storing_byte_in_SerializationInfo()
+        {
+            var info = SerializationTest.GetSerializationInfo(Svo.@Svo);
+            Assert.AreEqual("SerializedValue", info.GetString("Value"));
+        }
     }
 }
