@@ -8,7 +8,6 @@
     using System;
     using System.Collections.Generic;
     using System.Globalization;
-    using System.Linq;
     using System.Reflection;
     using System.Runtime.Serialization;
     using System.Threading;
@@ -501,41 +500,6 @@
         }
 
         [Test]
-        public void Explicit_StringTo@TSvo_AreEqual()
-        {
-            var exp = TestStruct;
-            var act = (@TSvo)TestStruct.ToString();
-
-            Assert.AreEqual(exp, act);
-        }
-
-        [Test]
-        public void Explicit_@TSvoToString_AreEqual()
-        {
-            var exp = TestStruct.ToString();
-            var act = (string)TestStruct;
-
-            Assert.AreEqual(exp, act);
-        }
-
-        [Test]
-        public void Explicit_Int32To@TSvo_AreEqual()
-        {
-            var exp = TestStruct;
-            var act = (@TSvo)123456789;
-
-            Assert.AreEqual(exp, act);
-        }
-        [Test]
-        public void Explicit_@TSvoToInt32_AreEqual()
-        {
-            var exp = 123456789;
-            var act = (int)TestStruct;
-
-            Assert.AreEqual(exp, act);
-        }
-
-        [Test]
         public void Length_DefaultValue_0()
         {
             var exp = 0;
@@ -548,72 +512,6 @@
             var exp = -10;
             var act = TestStruct.Length;
             Assert.AreEqual(exp, act);
-        }
-
-        [Test]
-        public void ConverterExists_@TSvo_IsTrue()
-        {
-            TypeConverterAssert.ConverterExists(typeof(@TSvo));
-        }
-
-        [Test]
-        public void CanNotConvertFromInt32_@TSvo_IsTrue()
-        {
-            TypeConverterAssert.CanNotConvertFrom(typeof(@TSvo), typeof(int));
-        }
-
-        [Test]
-        public void CanNotConvertToInt32_@TSvo_IsTrue()
-        {
-            TypeConverterAssert.CanNotConvertTo(typeof(@TSvo), typeof(int));
-        }
-
-        [Test]
-        public void CanConvertFromString_@TSvo_IsTrue()
-        {
-            TypeConverterAssert.CanConvertFromString(typeof(@TSvo));
-        }
-
-        [Test]
-        public void CanConvertToString_@TSvo_IsTrue()
-        {
-            TypeConverterAssert.CanConvertToString(typeof(@TSvo));
-        }
-
-        [Test]
-        public void ConvertFrom_StringNull_@TSvoEmpty()
-        {
-            using (new CultureInfoScope("en-GB"))
-            {
-                TypeConverterAssert.ConvertFromEquals(@TSvo.Empty, (string)null);
-            }
-        }
-
-        [Test]
-        public void ConvertFrom_StringEmpty_@TSvoEmpty()
-        {
-            using (new CultureInfoScope("en-GB"))
-            {
-                TypeConverterAssert.ConvertFromEquals(@TSvo.Empty, string.Empty);
-            }
-        }
-
-        [Test]
-        public void ConvertFromString_StringValue_TestStruct()
-        {
-            using (new CultureInfoScope("en-GB"))
-            {
-                TypeConverterAssert.ConvertFromEquals(TestStruct, TestStruct.ToString());
-            }
-        }
-
-        [Test]
-        public void ConvertToString_TestStruct_StringValue()
-        {
-            using (new CultureInfoScope("en-GB"))
-            {
-                TypeConverterAssert.ConvertToStringEquals(TestStruct.ToString(), TestStruct);
-            }
         }
 
         [TestCase(null)]
@@ -682,6 +580,70 @@
             {
                 Assert.AreEqual(expected, svo.ToString(format));
             }
+        }
+    }
+
+    public class Is_comparable
+    {
+        [Test]
+        public void to_null()
+        {
+            Assert.AreEqual(1, Svo.@Svo.CompareTo(null));
+        }
+
+        [Test]
+        public void to_@Svo_only()
+        {
+            Assert.Throws<ArgumentException>(() => Svo.@Svo.CompareTo(new object()));
+        }
+
+        [Test]
+        public void can_be_sorted()
+        {
+            var sorted = new[]
+            {
+                default(@Svo),
+                default(@Svo),
+                @Svo.Parse("SvoValue0"),
+                @Svo.Parse("SvoValue1"),
+                @Svo.Parse("SvoValue2"),
+            };
+
+            var list = new List<@Svo> { sorted[3], sorted[4], sorted[2], sorted[0], sorted[1] };
+            list.Sort();
+
+            Assert.AreEqual(sorted, list);
+        }
+    }
+
+    public class Casts
+    {
+        [Test]
+        public void explicitly_from_string()
+        {
+            var casted = (@Svo)"SvoValue";
+            Assert.AreEqual(Svo.@Svo, casted);
+        }
+
+        [Test]
+        public void explicitly_to_string()
+        {
+            var casted = (string)Svo.@Svo;
+            Assert.AreEqual("SvoValue", casted);
+        }
+
+        [Test]
+        public void explicitly_from_@type()
+        {
+            var casted = (@Svo)null;
+            Assert.AreEqual(Svo.@Svo, casted);
+        }
+
+        [Test]
+        public void explicitly_to_@type()
+        {
+            var casted = (@type)Svo.@Svo;
+            Assert.AreEqual(null, casted);
         }
     }
 
