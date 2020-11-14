@@ -15,7 +15,7 @@
     using @Model.Namespace;
 
     /// <summary>Tests the @FullName SVO.</summary>
-    public class @TSvoTest
+    public class OldStyle
     {
         /// <summary>The test instance for most tests.</summary>
         public static readonly @TSvo TestStruct = @TSvo.Parse("");
@@ -74,27 +74,6 @@
             var exp = -10;
             var act = TestStruct.Length;
             Assert.AreEqual(exp, act);
-        }
-
-        [TestCase(null)]
-        [TestCase("")]
-        [TestCase("Complex")]
-        public void IsInvalid_String(string str)
-        {
-            Assert.IsFalse(@TSvo.IsValid(str));
-        }
-
-        [TestCase("ComplexPattern")]
-        public void IsValid_String(string str)
-        {
-            Assert.IsTrue(@TSvo.IsValid(str));
-        }
-
-        [Test]
-        public void IsValid_DefaultValue_IsFalse()
-        {
-            @type? value = default;
-            Assert.IsFalse(@TSvo.IsValid(value));
         }
     }
 
