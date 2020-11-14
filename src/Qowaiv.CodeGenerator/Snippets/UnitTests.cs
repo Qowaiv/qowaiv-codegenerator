@@ -345,6 +345,17 @@
                 Assert.AreEqual(expected, svo.ToString(format));
             }
         }
+
+        [Test]
+        public void with_current_thread_culture_as_default()
+        {
+            using (new CultureInfoScope(
+                culture: TestCultures.Nl_NL,
+                cultureUI: TestCultures.En_GB))
+            {
+                Assert.AreEqual("svoValue", Svo.@Svo.ToString(provider: null));
+            }
+        }
     }
 
     public class Is_comparable
@@ -353,6 +364,13 @@
         public void to_null()
         {
             Assert.AreEqual(1, Svo.@Svo.CompareTo(null));
+        }
+
+        [Test]
+        public void to_@Svo_as_object()
+        {
+            object obj = Svo.@Svo;
+            Assert.AreEqual(0, Svo.@Svo.CompareTo(obj));
         }
 
         [Test]
