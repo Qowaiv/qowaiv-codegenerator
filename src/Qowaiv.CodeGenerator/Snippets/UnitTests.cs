@@ -22,93 +22,6 @@
         public static readonly @TSvo Smaller = @TSvo.Parse("");
         public static readonly @TSvo Bigger = @TSvo.Parse("");
 
-        /// <summary><see cref="@TSvo.Empty"/> should be equal to the default of @FullName.</summary>
-        [Test]
-        public void Empty_EqualsDefault()
-        {
-            Assert.AreEqual(default(@TSvo), @TSvo.Empty);
-        }
-
-        /// <summary>@TSvo.IsEmpty() should be true for the default of @FullName.</summary>
-        [Test]
-        public void IsEmpty_Default_IsTrue()
-        {
-            Assert.IsTrue(default(@TSvo).IsEmpty());
-        }
-        /// <summary>@TSvo.IsEmpty() should be false for @TSvo.Unknown.</summary>
-        [Test]
-        public void IsEmpty_Unknown_IsFalse()
-        {
-            Assert.IsFalse(@TSvo.Unknown.IsEmpty());
-        }
-        /// <summary>@TSvo.IsEmpty() should be false for the TestStruct.</summary>
-        [Test]
-        public void IsEmpty_TestStruct_IsFalse()
-        {
-            Assert.IsFalse(TestStruct.IsEmpty());
-        }
-
-        /// <summary>@TSvo.IsUnknown() should be false for the default of @FullName.</summary>
-        [Test]
-        public void IsUnknown_Default_IsFalse()
-        {
-            Assert.IsFalse(default(@TSvo).IsUnknown());
-        }
-        /// <summary>@TSvo.IsUnknown() should be true for @TSvo.Unknown.</summary>
-        [Test]
-        public void IsUnknown_Unknown_IsTrue()
-        {
-            Assert.IsTrue(@TSvo.Unknown.IsUnknown());
-        }
-        /// <summary>@TSvo.IsUnknown() should be false for the TestStruct.</summary>
-        [Test]
-        public void IsUnknown_TestStruct_IsFalse()
-        {
-            Assert.IsFalse(TestStruct.IsUnknown());
-        }
-
-        /// <summary>@TSvo.IsEmptyOrUnknown() should be true for the default of @FullName.</summary>
-        [Test]
-        public void IsEmptyOrUnknown_Default_IsFalse()
-        {
-            Assert.IsTrue(default(@TSvo).IsEmptyOrUnknown());
-        }
-        /// <summary>@TSvo.IsEmptyOrUnknown() should be true for @TSvo.Unknown.</summary>
-        [Test]
-        public void IsEmptyOrUnknown_Unknown_IsTrue()
-        {
-            Assert.IsTrue(@TSvo.Unknown.IsEmptyOrUnknown());
-        }
-        /// <summary>@TSvo.IsEmptyOrUnknown() should be false for the TestStruct.</summary>
-        [Test]
-        public void IsEmptyOrUnknown_TestStruct_IsFalse()
-        {
-            Assert.IsFalse(TestStruct.IsEmptyOrUnknown());
-        }
-
-        [Test]
-        public void DebuggerDisplay_DebugToString_HasAttribute()
-        {
-            DebuggerDisplayAssert.HasAttribute(typeof(@TSvo));
-        }
-
-        [Test]
-        public void DebuggerDisplay_DefaultValue_String()
-        {
-            DebuggerDisplayAssert.HasResult("ComplexPattern", default(@TSvo));
-        }
-        [Test]
-        public void DebuggerDisplay_Unknown_String()
-        {
-            DebuggerDisplayAssert.HasResult("ComplexPattern", @TSvo.Unknown);
-        }
-
-        [Test]
-        public void DebuggerDisplay_TestStruct_String()
-        {
-            DebuggerDisplayAssert.HasResult("ComplexPattern", TestStruct);
-        }
-
         [Test]
         public void Smaller_LessThan_Bigger_IsTrue()
         {
@@ -154,7 +67,7 @@
             var act = @TSvo.Empty.Length;
             Assert.AreEqual(exp, act);
         }
-        
+
         [Test]
         public void Length_TestStruct_IntValue()
         {
@@ -250,7 +163,33 @@
         {
             Assert.AreEqual(hashcode, svo.GetHashCode());
         }
+    }
 
+    public class With_domain_logic
+    {
+        [TestCase(false, "SvoValue")]
+        [TestCase(false, "?")]
+        [TestCase(true, "")]
+        public void IsEmpty_returns(bool result, @Svo svo)
+        {
+            Assert.AreEqual(result, svo.IsEmpty());
+        }
+
+        [TestCase(false, "SvoValue")]
+        [TestCase(true, "?")]
+        [TestCase(true, "")]
+        public void IsEmptyOrUnknown_returns(bool result, @Svo svo)
+        {
+            Assert.AreEqual(result, svo.IsEmptyOrUnknown());
+        }
+
+        [TestCase(false, "SvoValue")]
+        [TestCase(true, "?")]
+        [TestCase(false, "")]
+        public void IsUnknown_returns(bool result, @Svo svo)
+        {
+            Assert.AreEqual(result, svo.IsUnknown());
+        }
     }
 
     public class Can_be_parsed
