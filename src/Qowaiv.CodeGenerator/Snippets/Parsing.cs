@@ -32,11 +32,9 @@
         /// <paramref name="s"/> is not in the correct format.
         /// </exception>
         public static @TSvo Parse(string s, IFormatProvider formatProvider)
-        {
-            return TryParse(s, formatProvider, out @TSvo val)
-                ? val
-                : throw new FormatException(@FormatExceptionMessage);
-        }
+            => TryParse(s, formatProvider, out @TSvo val)
+            ? val
+            : throw new FormatException(@FormatExceptionMessage);
 
         /// <summary>Converts the <see cref="string"/> to <see cref="@TSvo"/>.</summary>
         /// <param name="s">
@@ -45,10 +43,7 @@
         /// <returns>
         /// The @FullName if the string was converted successfully, otherwise default.
         /// </returns>
-        public static @TSvo TryParse(string s)
-        {
-            return TryParse(s, CultureInfo.CurrentCulture, out @TSvo val) ? val : default;
-        }
+        public static @TSvo TryParse(string s) => TryParse(s, null, out @TSvo val) ? val : default;
 
         /// <summary>Converts the <see cref="string"/> to <see cref="@TSvo"/>.
         /// A return value indicates whether the conversion succeeded.
@@ -62,7 +57,7 @@
         /// <returns>
         /// True if the string was converted successfully, otherwise false.
         /// </returns>
-        public static bool TryParse(string s, out @TSvo result) => TryParse(s, CultureInfo.CurrentCulture, out result);
+        public static bool TryParse(string s, out @TSvo result) => TryParse(s, null, out result);
 #else
         /// <summary>Converts the <see cref="string"/> to <see cref="@TSvo"/>.</summary>
         /// <param name="s">
@@ -75,11 +70,9 @@
         /// <paramref name="s"/> is not in the correct format.
         /// </exception>
         public static @TSvo Parse(string s)
-        {
-            return TryParse(s, out @TSvo val)
-                ? val
-                : throw new FormatException(@FormatExceptionMessage);
-        }
+            => TryParse(s, out @TSvo val)
+            ? val
+            : throw new FormatException(@FormatExceptionMessage);
 
         /// <summary>Converts the <see cref="string"/> to <see cref="@TSvo"/>.</summary>
         /// <param name="s">
@@ -88,10 +81,7 @@
         /// <returns>
         /// The @FullName if the string was converted successfully, otherwise default.
         /// </returns>
-        public static @TSvo TryParse(string s)
-        {
-            return TryParse(s, out @TSvo val) ? val : default;
-        }
+        public static @TSvo TryParse(string s) => TryParse(s, out @TSvo val) ? val : default;
 #endif
     }
 }
