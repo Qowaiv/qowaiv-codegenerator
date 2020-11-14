@@ -11,7 +11,7 @@
         /// <param name="val">
         /// The <see cref="string"/> to validate.
         /// </param>
-        public static bool IsValid(string val) => IsValid(val, CultureInfo.CurrentCulture);
+        public static bool IsValid(string val) => IsValid(val, null);
 
         /// <summary>Returns true if the value represents a valid @FullName.</summary>
         /// <param name="val">
@@ -21,18 +21,16 @@
         /// The <see cref="IFormatProvider"/> to interpret the <see cref="string"/> value with.
         /// </param>
         public static bool IsValid(string val, IFormatProvider formatProvider)
-        {
-            return !string.IsNullOrWhiteSpace(val) && TryParse(val, formatProvider, out _);
-        }
+            => !string.IsNullOrWhiteSpace(val)
+            && TryParse(val, formatProvider, out _);
 #else
         /// <summary>Returns true if the value represents a valid @FullName.</summary>
         /// <param name="val">
         /// The <see cref="string"/> to validate.
         /// </param>
         public static bool IsValid(string val)
-        {
-            return !string.IsNullOrWhiteSpace(val) && TryParse(val, out _);
-        }
+            => !string.IsNullOrWhiteSpace(val)
+            && TryParse(val, out _);
 #endif
     }
 }

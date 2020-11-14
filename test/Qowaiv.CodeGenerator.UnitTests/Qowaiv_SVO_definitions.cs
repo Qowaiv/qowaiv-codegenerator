@@ -1,12 +1,14 @@
 ﻿using NUnit.Framework;
+using Qowaiv;
+using Qowaiv.CodeGenerator;
 using System;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Qowaiv.CodeGenerator.UnitTests
+namespace Qowaiv_SVO_definitions
 {
-    public class QowaivGeneratedTest
+    public class Generation_of
     {
         [TestCase("Date", typeof(DateTime), "date", "Qowaiv", SvoFeatures.Continuous ^ SvoFeatures.Field)]
         [TestCase("DateSpan", typeof(ulong), "date span", "Qowaiv", SvoFeatures.Continuous ^ SvoFeatures.EqualsSvo)]
@@ -46,21 +48,21 @@ namespace Qowaiv.CodeGenerator.UnitTests
             ^ SvoFeatures.Field)]
 
         [TestCase("InternetMediaType", typeof(string), "Internet media type", "Qowaiv.Web", SvoFeatures.AllExcludingCulture)]
-        public async Task GenerateAsync_Qowaiv(string name, Type underlying, string fulleName, string ns, SvoFeatures features, string formatExceptionMessage = null)
+        public async Task Qowaiv(string name, Type underlying, string fulleName, string ns, SvoFeatures features, string formatExceptionMessage = null)
         {
             var sub = ns.Replace("Qowaiv", "").Replace(".", @"\");
             var path = $@"C:\Code\qowaiv\src\Qowaiv\Generated\{sub}\{name}.generated.cs".Replace(@"\\", @"\");
-            await GenerateAsync(name, underlying, fulleName, ns, features, path, formatExceptionMessage);
+            await Generate(name, underlying, fulleName, ns, features, path, formatExceptionMessage);
         }
 
         [TestCase("Timestamp", typeof(ulong), "timestamp", "Qowaiv.Sql", SvoFeatures.Continuous)]
-        public async Task GenerateAsync_QowaivDataClient(string name, Type underlying, string fulleName, string ns, SvoFeatures features, string formatExceptionMessage = null)
+        public async Task Qowaiv_DataClient(string name, Type underlying, string fulleName, string ns, SvoFeatures features, string formatExceptionMessage = null)
         {
             var path = $@"C:\Code\qowaiv\src\Qowaiv.Data.SqlClient\Generated\{name}.generated.cs";
-            await GenerateAsync(name, underlying, fulleName, ns, features, path, formatExceptionMessage);
+            await Generate(name, underlying, fulleName, ns, features, path, formatExceptionMessage);
         }
 
-        private static async Task GenerateAsync(string name, Type underlying, string fulleName, string ns, SvoFeatures features, string path, string formatExceptionMessage)
+        private static async Task Generate(string name, Type underlying, string fulleName, string ns, SvoFeatures features, string path, string formatExceptionMessage)
         {
             var arguments = new SvoArguments
             {
