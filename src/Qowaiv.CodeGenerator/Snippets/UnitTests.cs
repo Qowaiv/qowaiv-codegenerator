@@ -14,71 +14,21 @@
     using System.Xml.Serialization;
     using @Namespace;
 
-    /// <summary>Tests the @FullName SVO.</summary>
-    public class OldStyle
-    {
-        /// <summary>The test instance for most tests.</summary>
-        public static readonly @TSvo TestStruct = @TSvo.Parse("");
-        public static readonly @TSvo Smaller = @TSvo.Parse("");
-        public static readonly @TSvo Bigger = @TSvo.Parse("");
-
-        [Test]
-        public void Smaller_LessThan_Bigger_IsTrue()
-        {
-            Assert.IsTrue(Smaller < Bigger);
-        }
-        [Test]
-        public void Bigger_GreaterThan_Smaller_IsTrue()
-        {
-            Assert.IsTrue(Bigger > Smaller);
-        }
-
-        [Test]
-        public void Smaller_LessThanOrEqual_Bigger_IsTrue()
-        {
-            Assert.IsTrue(Smaller <= Bigger);
-        }
-        [Test]
-        public void Bigger_GreaterThanOrEqual_Smaller_IsTrue()
-        {
-            Assert.IsTrue(Bigger >= Smaller);
-        }
-
-        [Test]
-        public void Smaller_LessThanOrEqual_Smaller_IsTrue()
-        {
-            var left = Smaller;
-            var right = Smaller;
-            Assert.IsTrue(left <= right);
-        }
-
-        [Test]
-        public void Smaller_GreaterThanOrEqual_Smaller_IsTrue()
-        {
-            var left = Smaller;
-            var right = Smaller;
-            Assert.IsTrue(left >= right);
-        }
-
-        [Test]
-        public void Length_DefaultValue_0()
-        {
-            var exp = 0;
-            var act = @TSvo.Empty.Length;
-            Assert.AreEqual(exp, act);
-        }
-
-        [Test]
-        public void Length_TestStruct_IntValue()
-        {
-            var exp = -10;
-            var act = TestStruct.Length;
-            Assert.AreEqual(exp, act);
-        }
-    }
-
     public class With_domain_logic
     {
+        [TestCase("")]
+        [TestCase("?")]
+        public void has_length_zero_for_empty_and_unknown(@TSvo svo)
+        {
+            Assert.AreEqual(0, svo.Length);
+        }
+
+        [TestCase(-17, "svoValue")]
+        public void has_length(int length, @TSvo svo)
+        {
+            Assert.AreEqual(length, svo.Length);
+        }
+
         [TestCase(false, "svoValue")]
         [TestCase(false, "?")]
         [TestCase(true, "")]
