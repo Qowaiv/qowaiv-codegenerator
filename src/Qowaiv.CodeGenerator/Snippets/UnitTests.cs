@@ -359,6 +359,42 @@
 
             Assert.AreEqual(sorted, list);
         }
+
+        [Test]
+        public void by_operators_for_different_values()
+        {
+            @TSvo smaller = @TSvo.Parse("svoValue");
+            @TSvo bigger = @TSvo.Parse("biggerValue");
+
+            Assert.IsTrue(smaller < bigger);
+            Assert.IsTrue(smaller <= bigger);
+            Assert.IsFalse(smaller > bigger);
+            Assert.IsFalse(smaller >= bigger);
+        }
+
+        [Test]
+        public void by_operators_for_equal_values()
+        {
+            @TSvo left = @TSvo.Parse("svoValue");
+            @TSvo right = @TSvo.Parse("svoValue");
+
+            Assert.IsFalse(left < right);
+            Assert.IsTrue(left <= right);
+            Assert.IsFalse(left > right);
+            Assert.IsTrue(left >= right);
+        }
+
+        [TestCase("", "svoValue")]
+        [TestCase("?", "svoValue")]
+        [TestCase("svoValue", "")]
+        [TestCase("svoValue", "?")]
+        public void by_operators_for_empty_or_unknown_always_false(@TSvo l, @TSvo r)
+        {
+            Assert.IsFalse(l <= r);
+            Assert.IsFalse(l < r);
+            Assert.IsFalse(l > r);
+            Assert.IsFalse(l >= r);
+        }
     }
 
     public class Casts
