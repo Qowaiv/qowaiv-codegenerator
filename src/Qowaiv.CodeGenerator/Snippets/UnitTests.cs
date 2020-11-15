@@ -223,6 +223,13 @@
         {
             Assert.AreEqual(default(@Svo), @Svo.TryParse("invalid input"));
         }
+
+
+        [Test]
+        public void with_TryParse_returns_SVO()
+        {
+            Assert.AreEqual(Svo.@Svo, @Svo.TryParse("svoValue"));
+        }
     }
 
     public class Has_custom_formatting
@@ -491,6 +498,17 @@
         {
             var info = SerializationTest.GetSerializationInfo(Svo.@Svo);
             Assert.AreEqual("SerializedValue", info.GetString("Value"));
+        }
+    }
+
+    public class Debug_experience
+    {
+        [TestCase("{empty}", "")]
+        [TestCase("{unknown}", "?")]
+        [TestCase("DebuggerDisplay", "SvoValue")]
+        public void with_custom_display(object display, @Svo svo)
+        {
+            DebuggerDisplayAssert.HasResult(display, svo);
         }
     }
 }
