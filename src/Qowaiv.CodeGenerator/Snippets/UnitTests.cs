@@ -79,7 +79,7 @@
 
     public class With_domain_logic
     {
-        [TestCase(false, "SvoValue")]
+        [TestCase(false, "svoValue")]
         [TestCase(false, "?")]
         [TestCase(true, "")]
         public void IsEmpty_returns(bool result, @TSvo svo)
@@ -87,7 +87,7 @@
             Assert.AreEqual(result, svo.IsEmpty());
         }
 
-        [TestCase(false, "SvoValue")]
+        [TestCase(false, "svoValue")]
         [TestCase(true, "?")]
         [TestCase(true, "")]
         public void IsEmptyOrUnknown_returns(bool result, @TSvo svo)
@@ -95,7 +95,7 @@
             Assert.AreEqual(result, svo.IsEmptyOrUnknown());
         }
 
-        [TestCase(false, "SvoValue")]
+        [TestCase(false, "svoValue")]
         [TestCase(true, "?")]
         [TestCase(false, "")]
         public void IsUnknown_returns(bool result, @TSvo svo)
@@ -113,8 +113,8 @@
             Assert.IsTrue(@TSvo.IsValid(input));
         }
 
-        [TestCase("SvoValue", "nl")]
-        [TestCase("SvoValue", "nl")]
+        [TestCase("svoValue", "nl")]
+        [TestCase("svoValue", "nl")]
         public void strings_representing_SVO(string input, CultureInfo culture)
         {
             Assert.IsTrue(@TSvo.IsValid(input, culture));
@@ -252,7 +252,7 @@
             using (TestCultures.En_GB.Scoped())
             {
                 var exception = Assert.Throws<FormatException>(() => @TSvo.Parse("invalid input"));
-                Assert.AreEqual("Not a valid SVO value", exception.Message);
+                Assert.AreEqual("Not a valid SvoType", exception.Message);
             }
         }
 
@@ -288,14 +288,14 @@
         [Test]
         public void unknown_value_is_represented_as_unknown()
         {
-            Assert.AreEqual("unknown", @TSvo.Unknown.ToString());
+            Assert.AreEqual("?", @TSvo.Unknown.ToString());
         }
 
         [Test]
         public void custom_format_provider_is_applied()
         {
             var formatted = Svo.@TSvo.ToString("SomeFormat", new UnitTestFormatProvider());
-            Assert.AreEqual("Unit Test Formatter, value: 'SvoValue', format: 'SomeFormat'", formatted);
+            Assert.AreEqual("Unit Test Formatter, value: 'svoValue', format: 'SomeFormat'", formatted);
         }
 
         [TestCase("en-GB", null, "svoValue", "SvoFormat")]
@@ -348,12 +348,13 @@
             {
                 default(@TSvo),
                 default(@TSvo),
-                @TSvo.Parse("SvoValue0"),
-                @TSvo.Parse("SvoValue1"),
-                @TSvo.Parse("SvoValue2"),
+                @TSvo.Parse("svoValue0"),
+                @TSvo.Parse("svoValue1"),
+                @TSvo.Parse("svoValue2"),
+                @TSvo.Unknown,
             };
 
-            var list = new List<@TSvo> { sorted[3], sorted[4], sorted[2], sorted[0], sorted[1] };
+            var list = new List<@TSvo> { sorted[3], sorted[4], sorted[5], sorted[2], sorted[0], sorted[1] };
             list.Sort();
 
             Assert.AreEqual(sorted, list);
@@ -365,7 +366,7 @@
         [Test]
         public void explicitly_from_string()
         {
-            var casted = (@TSvo)"SvoValue";
+            var casted = (@TSvo)"svoValue";
             Assert.AreEqual(Svo.@TSvo, casted);
         }
 
@@ -373,7 +374,7 @@
         public void explicitly_to_string()
         {
             var casted = (string)Svo.@TSvo;
-            Assert.AreEqual("SvoValue", casted);
+            Assert.AreEqual("svoValue", casted);
         }
 
         [Test]
@@ -438,7 +439,7 @@
         [Test]
         public void from_int()
         {
-            TypeConverterAssert.ConvertFromEquals(17, Svo.@TSvo);
+            TypeConverterAssert.ConvertFromEquals(Svo.@TSvo, -17);
         }
 
         [Test]
@@ -466,7 +467,7 @@
 
         [TestCase("Invalid input", typeof(FormatException))]
         [TestCase("2017-06-11", typeof(FormatException))]
-        [TestCase(5L, typeof(ArgumentOutOfRangeException))]
+        [TestCase(5L, typeof(InvalidCastException))]
         public void throws_for_invalid_json(object json, Type exceptionType)
         {
             var exception = Assert.Catch(() => JsonTester.Read<@TSvo>(json));
@@ -524,7 +525,7 @@
         }
 
         [Test]
-        public void storing_byte_in_SerializationInfo()
+        public void storing_@type_in_SerializationInfo()
         {
             var info = SerializationTest.GetSerializationInfo(Svo.@TSvo);
             Assert.AreEqual("SerializedValue", info.GetString("Value"));
@@ -535,7 +536,7 @@
     {
         [TestCase("{empty}", "")]
         [TestCase("{unknown}", "?")]
-        [TestCase("DebuggerDisplay", "SvoValue")]
+        [TestCase("DebuggerDisplay", "svoValue")]
         public void with_custom_display(object display, @TSvo svo)
         {
             DebuggerDisplayAssert.HasResult(display, svo);

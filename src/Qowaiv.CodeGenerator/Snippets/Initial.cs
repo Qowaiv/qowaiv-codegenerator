@@ -1,7 +1,12 @@
-﻿#pragma warning disable S2328
+﻿#if NoComparisonOperators
+#pragma warning disable S1210
+// "Equals" and the comparison operators should be overridden when implementing "IComparable"
+// See README.md => Sortable
+#endif
+
+#pragma warning disable S2328
 // "GetHashCode" should not reference mutable fields
 // See README.md => Hashing
-
 
 namespace @Namespace
 {
