@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 
 namespace Qowaiv.CodeGenerator.UnitTests
 {
-    public class SvoCodeGeneratorTest
+    public class Code_generation
     {
         [Test]
-        public async Task Generate_Int32Based_()
+        public async Task generate_Int32_based_SVO()
         {
             var args = new SvoArguments 
             { 
@@ -24,15 +24,15 @@ namespace Qowaiv.CodeGenerator.UnitTests
         }
 
         [Test]
-        public async Task GenerateInitial()
+        public async Task generate_initial_SVO()
         {
             var args = new SvoArguments
             {
-                Name = "MonthSpan",
+                Name = "Year",
                 Namespace = "Qowaiv",
-                FullName = "month span",
-                Underlying = typeof(int),
-                Features = SvoFeatures.Continuous,
+                FullName = "year",
+                Underlying = typeof(short),
+                Features = SvoFeatures.All,
             };
             var generator = new SvoCodeGenerator(args);
 

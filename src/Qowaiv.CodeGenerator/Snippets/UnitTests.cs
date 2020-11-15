@@ -3,7 +3,7 @@
     using NUnit.Framework;
     using Qowaiv.Globalization;
     using Qowaiv.TestTools;
-    using Qowaiv.TestTools.Formatting;
+    using Qowaiv.TestTools.Globalization;
     using Qowaiv.UnitTests.Json;
     using System;
     using System.Collections.Generic;
@@ -12,7 +12,7 @@
     using System.Runtime.Serialization;
     using System.Threading;
     using System.Xml.Serialization;
-    using @Model.Namespace;
+    using @Namespace;
 
     /// <summary>Tests the @FullName SVO.</summary>
     public class OldStyle
@@ -82,7 +82,7 @@
         [TestCase(false, "SvoValue")]
         [TestCase(false, "?")]
         [TestCase(true, "")]
-        public void IsEmpty_returns(bool result, @Svo svo)
+        public void IsEmpty_returns(bool result, @TSvo svo)
         {
             Assert.AreEqual(result, svo.IsEmpty());
         }
@@ -90,7 +90,7 @@
         [TestCase(false, "SvoValue")]
         [TestCase(true, "?")]
         [TestCase(true, "")]
-        public void IsEmptyOrUnknown_returns(bool result, @Svo svo)
+        public void IsEmptyOrUnknown_returns(bool result, @TSvo svo)
         {
             Assert.AreEqual(result, svo.IsEmptyOrUnknown());
         }
@@ -98,7 +98,7 @@
         [TestCase(false, "SvoValue")]
         [TestCase(true, "?")]
         [TestCase(false, "")]
-        public void IsUnknown_returns(bool result, @Svo svo)
+        public void IsUnknown_returns(bool result, @TSvo svo)
         {
             Assert.AreEqual(result, svo.IsUnknown());
         }
@@ -110,14 +110,14 @@
         [TestCase("unknown")]
         public void strings_representing_unknown(string input)
         {
-            Assert.IsTrue(@Svo.IsValid(input));
+            Assert.IsTrue(@TSvo.IsValid(input));
         }
 
         [TestCase("SvoValue", "nl")]
         [TestCase("SvoValue", "nl")]
         public void strings_representing_SVO(string input, CultureInfo culture)
         {
-            Assert.IsTrue(@Svo.IsValid(input, culture));
+            Assert.IsTrue(@TSvo.IsValid(input, culture));
         }
     }
 
@@ -126,25 +126,25 @@
         [Test]
         public void string_empty()
         {
-            Assert.IsFalse(YesNo.IsValid(string.Empty));
+            Assert.IsFalse(@TSvo.IsValid(string.Empty));
         }
 
         [Test]
         public void string_null()
         {
-            Assert.IsFalse(YesNo.IsValid(null));
+            Assert.IsFalse(@TSvo.IsValid(null));
         }
 
         [Test]
         public void whitespace()
         {
-            Assert.IsFalse(YesNo.IsValid(" "));
+            Assert.IsFalse(@TSvo.IsValid(" "));
         }
 
         [Test]
         public void garbage()
         {
-            Assert.IsFalse(YesNo.IsValid("garbage"));
+            Assert.IsFalse(@TSvo.IsValid("garbage"));
         }
     }
 
@@ -154,7 +154,7 @@
         [Test]
         public void Empty_represent_default_value()
         {
-            Assert.AreEqual(default(@Svo), @Svo.Empty);
+            Assert.AreEqual(default(@TSvo), @TSvo.Empty);
         }
     }
 
@@ -163,54 +163,54 @@
         [Test]
         public void not_equal_to_null()
         {
-            Assert.IsFalse(Svo.@Svo.Equals(null));
+            Assert.IsFalse(Svo.@TSvo.Equals(null));
         }
 
         [Test]
         public void not_equal_to_other_type()
         {
-            Assert.IsFalse(Svo.@Svo.Equals(new object()));
+            Assert.IsFalse(Svo.@TSvo.Equals(new object()));
         }
 
         [Test]
         public void not_equal_to_different_value()
         {
-            Assert.IsFalse(Svo.@Svo.Equals(@Svo.Parse("different")));
+            Assert.IsFalse(Svo.@TSvo.Equals(@TSvo.Parse("different")));
         }
 
         [Test]
         public void equal_to_same_value()
         {
-            Assert.IsTrue(Svo.@Svo.Equals(@Svo.Parse("same")));
+            Assert.IsTrue(Svo.@TSvo.Equals(@TSvo.Parse("same")));
         }
 
         [Test]
         public void equal_operator_returns_true_for_same_values()
         {
-            Assert.IsTrue(Svo.@Svo == @Svo.Parse("same"));
+            Assert.IsTrue(Svo.@TSvo == @TSvo.Parse("same"));
         }
 
         [Test]
         public void equal_operator_returns_false_for_different_values()
         {
-            Assert.IsFalse(Svo.@Svo == @Svo.Parse("different"));
+            Assert.IsFalse(Svo.@TSvo == @TSvo.Parse("different"));
         }
 
         [Test]
         public void not_equal_operator_returns_false_for_same_values()
         {
-            Assert.IsFalse(Svo.@Svo != @Svo.Parse("same"));
+            Assert.IsFalse(Svo.@TSvo != @TSvo.Parse("same"));
         }
 
         [Test]
         public void not_equal_operator_returns_true_for_different_values()
         {
-            Assert.IsTrue(Svo.@Svo != @Svo.Parse("different"));
+            Assert.IsTrue(Svo.@TSvo != @TSvo.Parse("different"));
         }
 
         [TestCase("", 0)]
         [TestCase("svoValue", 2)]
-        public void hash_code_is_value_based(@Svo svo, int hashcode)
+        public void hash_code_is_value_based(@TSvo svo, int hashcode)
         {
             Assert.AreEqual(hashcode, svo.GetHashCode());
         }
@@ -221,19 +221,19 @@
         [Test]
         public void from_null_string_represents_Empty()
         {
-            Assert.AreEqual(@Svo.Empty, @Svo.Parse(null));
+            Assert.AreEqual(@TSvo.Empty, @TSvo.Parse(null));
         }
 
         [Test]
         public void from_empty_string_represents_Empty()
         {
-            Assert.AreEqual(@Svo.Empty, @Svo.Parse(string.Empty));
+            Assert.AreEqual(@TSvo.Empty, @TSvo.Parse(string.Empty));
         }
 
         [Test]
         public void from_question_mark_represents_Unknown()
         {
-            Assert.AreEqual(@Svo.Unknown, @Svo.Parse("?"));
+            Assert.AreEqual(@TSvo.Unknown, @TSvo.Parse("?"));
         }
 
         [TestCase("en", "validInput")]
@@ -241,8 +241,8 @@
         {
             using (culture.Scoped())
             {
-                var parsed = @Svo.Parse(input);
-                Assert.AreEqual(Svo.@Svo, parsed);
+                var parsed = @TSvo.Parse(input);
+                Assert.AreEqual(Svo.@TSvo, parsed);
             }
         }
 
@@ -251,7 +251,7 @@
         {
             using (TestCultures.En_GB.Scoped())
             {
-                var exception = Assert.Throws<FormatException>(() => @Svo.Parse("invalid input"));
+                var exception = Assert.Throws<FormatException>(() => @TSvo.Parse("invalid input"));
                 Assert.AreEqual("Not a valid SVO value", exception.Message);
             }
         }
@@ -259,21 +259,21 @@
         [Test]
         public void from_valid_input_only_otherwise_return_false_on_TryParse()
         {
-            Assert.IsFalse(@Svo.TryParse("invalid input", out _));
+            Assert.IsFalse(@TSvo.TryParse("invalid input", out _));
         }
 
 
         [Test]
         public void from_invalid_as_empty_with_TryParse()
         {
-            Assert.AreEqual(default(@Svo), @Svo.TryParse("invalid input"));
+            Assert.AreEqual(default(@TSvo), @TSvo.TryParse("invalid input"));
         }
 
 
         [Test]
         public void with_TryParse_returns_SVO()
         {
-            Assert.AreEqual(Svo.@Svo, @Svo.TryParse("svoValue"));
+            Assert.AreEqual(Svo.@TSvo, @TSvo.TryParse("svoValue"));
         }
     }
 
@@ -282,40 +282,25 @@
         [Test]
         public void default_value_is_represented_as_string_empty()
         {
-            Assert.AreEqual(string.Empty, default(@Svo).ToString());
+            Assert.AreEqual(string.Empty, default(@TSvo).ToString());
         }
 
         [Test]
         public void unknown_value_is_represented_as_unknown()
         {
-            Assert.AreEqual("unknown", @Svo.Unknown.ToString());
+            Assert.AreEqual("unknown", @TSvo.Unknown.ToString());
         }
 
         [Test]
         public void custom_format_provider_is_applied()
         {
-            var formatted = Svo.@Svo.ToString("SomeFormat", new UnitTestFormatProvider());
+            var formatted = Svo.@TSvo.ToString("SomeFormat", new UnitTestFormatProvider());
             Assert.AreEqual("Unit Test Formatter, value: 'SvoValue', format: 'SomeFormat'", formatted);
         }
 
-        [TestCase("en-GB", null, "Yes", "yes")]
-        [TestCase("nl-BE", "f", "Yes", "ja")]
-        [TestCase("es-EQ", "F", "Yes", "Si")]
-        [TestCase("en-GB", null, "No", "no")]
-        [TestCase("nl-BE", "f", "No", "nee")]
-        [TestCase("es-EQ", "F", "No", "No")]
-        [TestCase("en-GB", "C", "Yes", "Y")]
-        [TestCase("nl-BE", "C", "Yes", "J")]
-        [TestCase("es-EQ", "C", "Yes", "S")]
-        [TestCase("en-GB", "C", "No", "N")]
-        [TestCase("nl-BE", "c", "No", "n")]
-        [TestCase("es-EQ", "c", "No", "n")]
-        [TestCase("en-US", "B", "Yes", "True")]
-        [TestCase("en-US", "b", "No", "false")]
-        [TestCase("en-US", "i", "Yes", "1")]
-        [TestCase("en-US", "i", "No", "0")]
-        [TestCase("en-US", "i", "?", "?")]
-        public void culture_dependend(CultureInfo culture, string format, YesNo svo, string expected)
+        [TestCase("en-GB", null, "svoValue", "SvoFormat")]
+        [TestCase("nl-BE", "f", "svoValue", "SvoFormat")]
+        public void culture_dependend(CultureInfo culture, string format, @TSvo svo, string expected)
         {
             using (culture.Scoped())
             {
@@ -330,7 +315,7 @@
                 culture: TestCultures.Nl_NL,
                 cultureUI: TestCultures.En_GB))
             {
-                Assert.AreEqual("svoValue", Svo.@Svo.ToString(provider: null));
+                Assert.AreEqual("svoValue", Svo.@TSvo.ToString(provider: null));
             }
         }
     }
@@ -340,20 +325,20 @@
         [Test]
         public void to_null()
         {
-            Assert.AreEqual(1, Svo.@Svo.CompareTo(null));
+            Assert.AreEqual(1, Svo.@TSvo.CompareTo(null));
         }
 
         [Test]
-        public void to_@Svo_as_object()
+        public void to_@TSvo_as_object()
         {
-            object obj = Svo.@Svo;
-            Assert.AreEqual(0, Svo.@Svo.CompareTo(obj));
+            object obj = Svo.@TSvo;
+            Assert.AreEqual(0, Svo.@TSvo.CompareTo(obj));
         }
 
         [Test]
-        public void to_@Svo_only()
+        public void to_@TSvo_only()
         {
-            Assert.Throws<ArgumentException>(() => Svo.@Svo.CompareTo(new object()));
+            Assert.Throws<ArgumentException>(() => Svo.@TSvo.CompareTo(new object()));
         }
 
         [Test]
@@ -361,14 +346,14 @@
         {
             var sorted = new[]
             {
-                default(@Svo),
-                default(@Svo),
-                @Svo.Parse("SvoValue0"),
-                @Svo.Parse("SvoValue1"),
-                @Svo.Parse("SvoValue2"),
+                default(@TSvo),
+                default(@TSvo),
+                @TSvo.Parse("SvoValue0"),
+                @TSvo.Parse("SvoValue1"),
+                @TSvo.Parse("SvoValue2"),
             };
 
-            var list = new List<@Svo> { sorted[3], sorted[4], sorted[2], sorted[0], sorted[1] };
+            var list = new List<@TSvo> { sorted[3], sorted[4], sorted[2], sorted[0], sorted[1] };
             list.Sort();
 
             Assert.AreEqual(sorted, list);
@@ -380,28 +365,28 @@
         [Test]
         public void explicitly_from_string()
         {
-            var casted = (@Svo)"SvoValue";
-            Assert.AreEqual(Svo.@Svo, casted);
+            var casted = (@TSvo)"SvoValue";
+            Assert.AreEqual(Svo.@TSvo, casted);
         }
 
         [Test]
         public void explicitly_to_string()
         {
-            var casted = (string)Svo.@Svo;
+            var casted = (string)Svo.@TSvo;
             Assert.AreEqual("SvoValue", casted);
         }
 
         [Test]
         public void explicitly_from_@type()
         {
-            var casted = (@Svo)null;
-            Assert.AreEqual(Svo.@Svo, casted);
+            var casted = (@TSvo)null;
+            Assert.AreEqual(Svo.@TSvo, casted);
         }
 
         [Test]
         public void explicitly_to_@type()
         {
-            var casted = (@type)Svo.@Svo;
+            var casted = (@type)Svo.@TSvo;
             Assert.AreEqual(null, casted);
         }
     }
@@ -411,7 +396,7 @@
         [Test]
         public void via_TypeConverter_registered_with_attribute()
         {
-            TypeConverterAssert.ConverterExists(typeof(@Svo));
+            TypeConverterAssert.ConverterExists(typeof(@TSvo));
         }
 
         [Test]
@@ -419,7 +404,7 @@
         {
             using (TestCultures.En_GB.Scoped())
             {
-                TypeConverterAssert.ConvertFromEquals(default(@Svo), null);
+                TypeConverterAssert.ConvertFromEquals(default(@TSvo), null);
             }
         }
 
@@ -428,7 +413,7 @@
         {
             using (TestCultures.En_GB.Scoped())
             {
-                TypeConverterAssert.ConvertFromEquals(default(@Svo), string.Empty);
+                TypeConverterAssert.ConvertFromEquals(default(@TSvo), string.Empty);
             }
         }
 
@@ -437,7 +422,7 @@
         {
             using (TestCultures.En_GB.Scoped())
             {
-                TypeConverterAssert.ConvertFromEquals(Svo.@Svo, Svo.@Svo.ToString());
+                TypeConverterAssert.ConvertFromEquals(Svo.@TSvo, Svo.@TSvo.ToString());
             }
         }
 
@@ -446,34 +431,34 @@
         {
             using (TestCultures.En_GB.Scoped())
             {
-                TypeConverterAssert.ConvertToStringEquals(Svo.@Svo.ToString(), Svo.@Svo);
+                TypeConverterAssert.ConvertToStringEquals(Svo.@TSvo.ToString(), Svo.@TSvo);
             }
         }
 
         [Test]
         public void from_int()
         {
-            TypeConverterAssert.ConvertFromEquals(17, Svo.@Svo);
+            TypeConverterAssert.ConvertFromEquals(17, Svo.@TSvo);
         }
 
         [Test]
         public void to_int()
         {
-            TypeConverterAssert.ConvertToEquals(17, Svo.@Svo);
+            TypeConverterAssert.ConvertToEquals(17, Svo.@TSvo);
         }
     }
 
     public class Supports_JSON_serialization
     {
         [TestCase("?", "unknown")]
-        public void convension_based_deserialization(@Svo expected, object json)
+        public void convension_based_deserialization(@TSvo expected, object json)
         {
-            var actual = JsonTester.Read<@Svo>(json);
+            var actual = JsonTester.Read<@TSvo>(json);
             Assert.AreEqual(expected, actual);
         }
 
         [TestCase(null, "")]
-        public void convension_based_serialization(object expected, @Svo svo)
+        public void convension_based_serialization(object expected, @TSvo svo)
         {
             var serialized = JsonTester.Write(svo);
             Assert.AreEqual(expected, serialized);
@@ -484,7 +469,7 @@
         [TestCase(5L, typeof(ArgumentOutOfRangeException))]
         public void throws_for_invalid_json(object json, Type exceptionType)
         {
-            var exception = Assert.Catch(() => JsonTester.Read<@Svo>(json));
+            var exception = Assert.Catch(() => JsonTester.Read<@TSvo>(json));
             Assert.IsInstanceOf(exceptionType, exception);
         }
     }
@@ -494,28 +479,28 @@
         [Test]
         public void using_XmlSerializer_to_serialize()
         {
-            var xml = SerializationTest.XmlSerialize(Svo.@Svo);
-            Assert.AreEqual("yes", xml);
+            var xml = SerializationTest.XmlSerialize(Svo.@TSvo);
+            Assert.AreEqual("xmlValue", xml);
         }
 
         [Test]
         public void using_XmlSerializer_to_deserialize()
         {
-            var svo = SerializationTest.XmlDeserialize<YesNo>("yes");
-            Assert.AreEqual(Svo.@Svo, svo);
+            var svo = SerializationTest.XmlDeserialize<@TSvo>("xmlValue");
+            Assert.AreEqual(Svo.@TSvo, svo);
         }
 
         [Test]
         public void using_DataContractSerializer()
         {
-            var round_tripped = SerializationTest.DataContractSerializeDeserialize(Svo.@Svo);
-            Assert.AreEqual(Svo.@Svo, round_tripped);
+            var round_tripped = SerializationTest.DataContractSerializeDeserialize(Svo.@TSvo);
+            Assert.AreEqual(Svo.@TSvo, round_tripped);
         }
 
         [Test]
         public void as_part_of_a_structure()
         {
-            var structure = XmlStructure.New(Svo.@Svo);
+            var structure = XmlStructure.New(Svo.@TSvo);
             var round_tripped = SerializationTest.XmlSerializeDeserialize(structure);
 
             Assert.AreEqual(structure, round_tripped);
@@ -524,7 +509,7 @@
         [Test]
         public void has_no_custom_XML_schema()
         {
-            IXmlSerializable obj = Svo.@Svo;
+            IXmlSerializable obj = Svo.@TSvo;
             Assert.IsNull(obj.GetSchema());
         }
     }
@@ -534,14 +519,14 @@
         [Test]
         public void using_BinaryFormatter()
         {
-            var round_tripped = SerializationTest.BinaryFormatterSerializeDeserialize(Svo.@Svo);
-            Assert.AreEqual(Svo.@Svo, round_tripped);
+            var round_tripped = SerializationTest.BinaryFormatterSerializeDeserialize(Svo.@TSvo);
+            Assert.AreEqual(Svo.@TSvo, round_tripped);
         }
 
         [Test]
         public void storing_byte_in_SerializationInfo()
         {
-            var info = SerializationTest.GetSerializationInfo(Svo.@Svo);
+            var info = SerializationTest.GetSerializationInfo(Svo.@TSvo);
             Assert.AreEqual("SerializedValue", info.GetString("Value"));
         }
     }
@@ -551,7 +536,7 @@
         [TestCase("{empty}", "")]
         [TestCase("{unknown}", "?")]
         [TestCase("DebuggerDisplay", "SvoValue")]
-        public void with_custom_display(object display, @Svo svo)
+        public void with_custom_display(object display, @TSvo svo)
         {
             DebuggerDisplayAssert.HasResult(display, svo);
         }
