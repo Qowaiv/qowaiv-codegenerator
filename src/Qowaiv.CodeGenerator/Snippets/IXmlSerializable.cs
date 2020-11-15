@@ -37,9 +37,6 @@
         /// </remarks>
         /// <param name="writer">An XML writer.</param>
         void IXmlSerializable.WriteXml(XmlWriter writer)
-        {
-            Guard.NotNull(writer, nameof(writer));
-            writer.WriteString(ToXmlString());
-        }
+            => Guard.NotNull(writer, nameof(writer)).WriteString(ToXmlString());
     }
 }

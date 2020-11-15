@@ -8,15 +8,9 @@
         /// <inheritdoc />
         public int CompareTo(object obj)
         {
-            if(obj is null)
-            {
-                return 1;
-            }
-            if (obj is @TSvo other)
-            {
-                return CompareTo(other);
-            }
-            throw new ArgumentException($"Argument must be {GetType().Name}.", nameof(obj));
+            if (obj is null) { return 1; }
+            else if (obj is @TSvo other) { return CompareTo(other); }
+            else { throw new ArgumentException($"Argument must be {GetType().Name}.", nameof(obj)); }
         }
 #if !NotEqualsSvo
         /// <inheritdoc />

@@ -18,9 +18,6 @@
         /// <param name="info">The serialization info.</param>
         /// <param name="context">The streaming context.</param>
         void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            Guard.NotNull(info, nameof(info));
-            info.AddValue("Value", m_Value);
-        }
+            => Guard.NotNull(info, nameof(info)).AddValue("Value", m_Value);
     }
 }
