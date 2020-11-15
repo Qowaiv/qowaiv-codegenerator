@@ -294,10 +294,10 @@
         [Test]
         public void can_be_sorted()
         {
-            var sorted = new[]
+            var sorted = new @TSvo[]
             {
-                default(@TSvo),
-                default(@TSvo),
+                default,
+                default,
                 @TSvo.Parse("svoValue0"),
                 @TSvo.Parse("svoValue1"),
                 @TSvo.Parse("svoValue2"),
