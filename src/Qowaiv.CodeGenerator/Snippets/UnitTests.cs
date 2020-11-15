@@ -77,6 +77,78 @@
         }
     }
 
+    public class With_domain_logic
+    {
+        [TestCase(false, "SvoValue")]
+        [TestCase(false, "?")]
+        [TestCase(true, "")]
+        public void IsEmpty_returns(bool result, @Svo svo)
+        {
+            Assert.AreEqual(result, svo.IsEmpty());
+        }
+
+        [TestCase(false, "SvoValue")]
+        [TestCase(true, "?")]
+        [TestCase(true, "")]
+        public void IsEmptyOrUnknown_returns(bool result, @Svo svo)
+        {
+            Assert.AreEqual(result, svo.IsEmptyOrUnknown());
+        }
+
+        [TestCase(false, "SvoValue")]
+        [TestCase(true, "?")]
+        [TestCase(false, "")]
+        public void IsUnknown_returns(bool result, @Svo svo)
+        {
+            Assert.AreEqual(result, svo.IsUnknown());
+        }
+    }
+
+    public class Is_valid_for
+    {
+        [TestCase("?")]
+        [TestCase("unknown")]
+        public void strings_representing_unknown(string input)
+        {
+            Assert.IsTrue(@Svo.IsValid(input));
+        }
+
+        [TestCase("SvoValue", "nl")]
+        [TestCase("SvoValue", "nl")]
+        public void strings_representing_SVO(string input, CultureInfo culture)
+        {
+            Assert.IsTrue(@Svo.IsValid(input, culture));
+        }
+    }
+
+    public class Is_not_valid_for
+    {
+        [Test]
+        public void string_empty()
+        {
+            Assert.IsFalse(YesNo.IsValid(string.Empty));
+        }
+
+        [Test]
+        public void string_null()
+        {
+            Assert.IsFalse(YesNo.IsValid(null));
+        }
+
+        [Test]
+        public void whitespace()
+        {
+            Assert.IsFalse(YesNo.IsValid(" "));
+        }
+
+        [Test]
+        public void garbage()
+        {
+            Assert.IsFalse(YesNo.IsValid("garbage"));
+        }
+    }
+
+
     public class Has_constant
     {
         [Test]
@@ -141,33 +213,6 @@
         public void hash_code_is_value_based(@Svo svo, int hashcode)
         {
             Assert.AreEqual(hashcode, svo.GetHashCode());
-        }
-    }
-
-    public class With_domain_logic
-    {
-        [TestCase(false, "SvoValue")]
-        [TestCase(false, "?")]
-        [TestCase(true, "")]
-        public void IsEmpty_returns(bool result, @Svo svo)
-        {
-            Assert.AreEqual(result, svo.IsEmpty());
-        }
-
-        [TestCase(false, "SvoValue")]
-        [TestCase(true, "?")]
-        [TestCase(true, "")]
-        public void IsEmptyOrUnknown_returns(bool result, @Svo svo)
-        {
-            Assert.AreEqual(result, svo.IsEmptyOrUnknown());
-        }
-
-        [TestCase(false, "SvoValue")]
-        [TestCase(true, "?")]
-        [TestCase(false, "")]
-        public void IsUnknown_returns(bool result, @Svo svo)
-        {
-            Assert.AreEqual(result, svo.IsUnknown());
         }
     }
 
