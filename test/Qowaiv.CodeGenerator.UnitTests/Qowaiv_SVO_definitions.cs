@@ -22,7 +22,7 @@ namespace Qowaiv_SVO_definitions
         [TestCase("PostalCode", typeof(string), "postal code", "Qowaiv", SvoFeatures.Default)]
         [TestCase("Uuid", typeof(Guid), "UUID", "Qowaiv", SvoFeatures.AllExcludingCulture ^ SvoFeatures.IsUnknown)]
         [TestCase("WeekDate", typeof(Date), "week date", "Qowaiv", SvoFeatures.Continuous ^ SvoFeatures.Field ^ SvoFeatures.ISerializable)]
-        [TestCase("Year", typeof(short), "year", "Qowaiv", SvoFeatures.Default | SvoFeatures.ComparisonOperators)]
+        [TestCase("Year", typeof(short), "year", "Qowaiv", SvoFeatures.Default)]
         [TestCase("YesNo", typeof(byte), "yes-no", "Qowaiv", SvoFeatures.Default)]
 
         [TestCase("Amount", typeof(decimal), "amount", "Qowaiv.Financial", SvoFeatures.Continuous, "QowaivMessages.FormatExceptionFinancialAmount")]
