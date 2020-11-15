@@ -131,13 +131,13 @@
         [Test]
         public void equal_to_same_value()
         {
-            Assert.IsTrue(Svo.@TSvo.Equals(@TSvo.Parse("same")));
+            Assert.IsTrue(Svo.@TSvo.Equals(@TSvo.Parse("svoValue")));
         }
 
         [Test]
         public void equal_operator_returns_true_for_same_values()
         {
-            Assert.IsTrue(Svo.@TSvo == @TSvo.Parse("same"));
+            Assert.IsTrue(Svo.@TSvo == @TSvo.Parse("svoValue"));
         }
 
         [Test]
@@ -149,7 +149,7 @@
         [Test]
         public void not_equal_operator_returns_false_for_same_values()
         {
-            Assert.IsFalse(Svo.@TSvo != @TSvo.Parse("same"));
+            Assert.IsFalse(Svo.@TSvo != @TSvo.Parse("svoValue"));
         }
 
         [Test]
@@ -186,7 +186,7 @@
             Assert.AreEqual(@TSvo.Unknown, @TSvo.Parse("?"));
         }
 
-        [TestCase("en", "validInput")]
+        [TestCase("en", "svoValue")]
         public void from_string_with_different_formatting_and_cultures(CultureInfo culture, string input)
         {
             using (culture.Scoped())
