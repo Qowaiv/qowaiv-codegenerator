@@ -98,7 +98,6 @@
         }
     }
 
-
     public class Has_constant
     {
         [Test]
@@ -250,7 +249,7 @@
 
         [TestCase("en-GB", null, "svoValue", "SvoFormat")]
         [TestCase("nl-BE", "f", "svoValue", "SvoFormat")]
-        public void culture_dependend(CultureInfo culture, string format, @TSvo svo, string expected)
+        public void culture_dependent(CultureInfo culture, string format, @TSvo svo, string expected)
         {
             using (culture.Scoped())
             {
@@ -438,14 +437,14 @@
     public class Supports_JSON_serialization
     {
         [TestCase("?", "unknown")]
-        public void convension_based_deserialization(@TSvo expected, object json)
+        public void convention_based_deserialization(@TSvo expected, object json)
         {
             var actual = JsonTester.Read<@TSvo>(json);
             Assert.AreEqual(expected, actual);
         }
 
         [TestCase(null, "")]
-        public void convension_based_serialization(object expected, @TSvo svo)
+        public void convention_based_serialization(object expected, @TSvo svo)
         {
             var serialized = JsonTester.Write(svo);
             Assert.AreEqual(expected, serialized);
