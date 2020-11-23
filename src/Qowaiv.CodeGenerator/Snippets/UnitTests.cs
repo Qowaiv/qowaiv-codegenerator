@@ -291,7 +291,7 @@
         }
 
         [Test]
-        public void can_be_sorted()
+        public void can_be_sorted_using_compare()
         {
             var sorted = new @TSvo[]
             {
@@ -517,12 +517,12 @@
         }
     }
 
-    public class Debug_experience
+    public class Debugger
     {
         [TestCase("{empty}", "")]
         [TestCase("{unknown}", "?")]
         [TestCase("DebuggerDisplay", "svoValue")]
-        public void with_custom_display(object display, @TSvo svo)
+        public void has_custom_display(object display, @TSvo svo)
         {
             DebuggerDisplayAssert.HasResult(display, svo);
         }
