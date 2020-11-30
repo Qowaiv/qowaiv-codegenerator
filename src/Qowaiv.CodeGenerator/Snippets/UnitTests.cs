@@ -229,6 +229,33 @@
     public class Has_custom_formatting
     {
         [Test]
+        public void _default()
+        {
+            using (TestCultures.En_GB.Scoped())
+            {
+                Assert.AreEqual("svoValue", Svo.@TSvo.ToString());
+            }
+        }
+
+        [Test]
+        public void with_null_pattern_equal_to_default()
+        {
+            using (TestCultures.En_GB.Scoped())
+            {
+                Assert.AreEqual(Svo.@TSvo.ToString(), Svo.@TSvo.ToString(default(string)));
+            }
+        }
+
+        [Test]
+        public void with_string_empty_pattern_equal_to_default()
+        {
+            using (TestCultures.En_GB.Scoped())
+            {
+                Assert.AreEqual(Svo.@TSvo.ToString(), Svo.@TSvo.ToString(string.Empty));
+            }
+        }
+
+        [Test]
         public void default_value_is_represented_as_string_empty()
         {
             Assert.AreEqual(string.Empty, default(@TSvo).ToString());
