@@ -527,7 +527,6 @@
         }
     }
 
-
     public class Is_Open_API_data_type
     {
         internal static readonly OpenApiDataTypeAttribute Attribute = OpenApiDataTypeAttribute.From(typeof(@TSvo)).FirstOrDefault();
