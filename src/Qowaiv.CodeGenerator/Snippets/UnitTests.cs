@@ -527,6 +527,45 @@
         }
     }
 
+
+    public class Is_Open_API_data_type
+    {
+        internal static readonly OpenApiDataTypeAttribute Attribute = OpenApiDataTypeAttribute.From(typeof(@TSvo)).FirstOrDefault();
+
+        [Test]
+        public void with_description()
+        {
+            Assert.AreEqual(
+                "description",
+                Attribute.Description);
+        }
+
+        [Test]
+        public void has_type()
+        {
+            Assert.AreEqual("@type", Attribute.Type);
+        }
+
+        [Test]
+        public void has_format()
+        {
+            Assert.AreEqual("@TSvo", Attribute.Format);
+        }
+
+        [TestCase("svoValue")]
+        public void pattern_matches(string input)
+        {
+            Assert.IsTrue(Regex.IsMatch(input, Attribute.Pattern));
+        }
+
+        [Test]
+        public void pattern_is_null()
+        {
+            Assert.IsNull(Attribute.Pattern);
+        }
+    }
+
+
     public class Supports_binary_serialization
     {
         [Test]
